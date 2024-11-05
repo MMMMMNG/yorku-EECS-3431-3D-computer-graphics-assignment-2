@@ -239,6 +239,7 @@ window.onload = function init() {
     //  Load shaders and initialize attribute buffers
     //
     program = initShaders( gl, "vertex-shader", "fragment-shader" );
+    skyboxProgram = initShaders(gl, "skybox-vertex-shader", "skybox-fragment-shader");
     gl.useProgram( program );
     
  
