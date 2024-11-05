@@ -3,6 +3,9 @@ https://lettier.github.io/3d-game-shaders-for-beginners/screen-space-reflection.
 
 https://lettier.github.io/3d-game-shaders-for-beginners/screen-space-refraction.html
 
+Cubemap:
+https://webglfundamentals.org/webgl/lessons/webgl-skybox.html
+
 Additional Sources and Textures:
 
 "Seamless dirt texture" by hhh316. 2010, May 09. https://www.deviantart.com/hhh316/art/Seamless-dirt-texture-163426021
