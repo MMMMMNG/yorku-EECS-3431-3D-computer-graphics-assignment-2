@@ -178,8 +178,6 @@ function setColor(c)
 
 function toggleTextures() {
     useTextures = 1 - useTextures ;
-    gl.uniform1i( gl.getUniformLocation(program,
-                                         "useTextures"), useTextures );
 }
 
 function waitForTextures1(tex) {
@@ -223,6 +221,7 @@ function waitForTextures(texs) {
                },5) ;
     
 }
+let skyboxProgramInfo;
 
 window.onload = function init() {
 
@@ -240,7 +239,9 @@ window.onload = function init() {
     //  Load shaders and initialize attribute buffers
     //
     program = initShaders( gl, "vertex-shader", "fragment-shader" );
-    skyboxProgram = initShaders(gl, "skybox-vertex-shader", "skybox-fragment-shader");
+    skyboxProgramInfo = webglUtils.createProgramInfo(
+        gl, ["skybox-vertex-shader", "skybox-fragment-shader"]);
+  
     skyboxSetup(gl);
     gl.useProgram( program );
     
@@ -382,8 +383,11 @@ function gPush() {
 
 function render() {
     
-    gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    //gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.useProgram( program );
     
+    gl.uniform1i( gl.getUniformLocation(program,
+        "useTextures"), useTextures );
     
     eye = vec3(0,0,10);
     eye[1] = eye[1] + 0 ;
@@ -480,7 +484,7 @@ function render() {
     }
     gPop() ;
 
-    renderSkybox(gl, skyboxProgram, viewMatrix, projectionMatrix);
+    renderSkybox(gl, skyboxProgramInfo, viewMatrix, projectionMatrix);
     
     if( animFlag )
         window.requestAnimFrame(render);
