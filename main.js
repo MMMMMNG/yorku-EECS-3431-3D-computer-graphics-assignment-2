@@ -135,8 +135,9 @@ function initTextures() {
     
     textureArray.push({}) ;
     loadImageTexture(textureArray[textureArray.length-1],image2) ;
-    
-    
+
+    textureArray.push({}) ;
+    loadFileTexture(textureArray[textureArray.length-1],"Textures/cubemaps_skybox-1474704952.png");
 }
 
 
@@ -177,8 +178,6 @@ function setColor(c)
 
 function toggleTextures() {
     useTextures = 1 - useTextures ;
-    gl.uniform1i( gl.getUniformLocation(program,
-                                         "useTextures"), useTextures );
 }
 
 function waitForTextures1(tex) {
@@ -222,6 +221,7 @@ function waitForTextures(texs) {
                },5) ;
     
 }
+let skyboxProgramInfo;
 
 window.onload = function init() {
 
@@ -239,6 +239,10 @@ window.onload = function init() {
     //  Load shaders and initialize attribute buffers
     //
     program = initShaders( gl, "vertex-shader", "fragment-shader" );
+    skyboxProgramInfo = webglUtils.createProgramInfo(
+        gl, ["skybox-vertex-shader", "skybox-fragment-shader"]);
+  
+    skyboxSetup(gl);
     gl.useProgram( program );
     
  
@@ -380,13 +384,16 @@ function gPush() {
 function render() {
     
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.useProgram( program );
     
+    gl.uniform1i( gl.getUniformLocation(program,
+        "useTextures"), useTextures );
     
     eye = vec3(0,0,10);
     eye[1] = eye[1] + 0 ;
    
     // set the projection matrix
-    projectionMatrix = ortho(left, right, bottom, ytop, near, far);
+    projectionMatrix = perspective(60, 1, near, far);
     
     // set the camera matrix
     viewMatrix = lookAt(eye, at , up);
@@ -396,9 +403,13 @@ function render() {
     modelMatrix = mat4() ;
     
     // apply the slider rotations
-    gRotate(RZ,0,0,1) ;
-    gRotate(RY,0,1,0) ;
-    gRotate(RX,1,0,0) ;
+    //TO CAMERA; NOT SCENE
+    viewMatrix = mult(viewMatrix, rotate(RZ,[0,0,1])) ;
+    viewMatrix = mult(viewMatrix, rotate(RY,[0,1,0])) ;
+    viewMatrix = mult(viewMatrix, rotate(RX,[1,0,0])) ;
+    //gRotate(RZ,0,0,1) ;
+    //gRotate(RY,0,1,0) ;
+    //gRotate(RX,1,0,0) ;
     
     // send all the matrices to the shaders
     setAllMatrices() ;
@@ -478,6 +489,8 @@ function render() {
         drawCone() ;
     }
     gPop() ;
+
+    renderSkybox(gl, eye, at, up);
     
     if( animFlag )
         window.requestAnimFrame(render);
