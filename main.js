@@ -126,6 +126,12 @@ function initTextures() {
     
     textureArray.push({}) ;
     loadFileTexture(textureArray[textureArray.length-1],"cubetexture.png") ;
+
+    textureArray.push({}) ;
+    loadFileTexture(textureArray[textureArray.length-1],"dirt_texture.jpg") ;
+
+    textureArray.push({}) ;
+    loadFileTexture(textureArray[textureArray.length-1],"galaxy_wallpaper.jpg") ;
     
     textureArray.push({}) ;
     loadImageTexture(textureArray[textureArray.length-1],image2) ;
@@ -415,14 +421,23 @@ function render() {
     gl.bindTexture(gl.TEXTURE_2D, textureArray[0].textureWebGL);
     gl.uniform1i(gl.getUniformLocation(program, "texture1"), 0);
     
-    gl.activeTexture(gl.TEXTURE1);
-    gl.bindTexture(gl.TEXTURE_2D, textureArray[1].textureWebGL);
-    gl.uniform1i(gl.getUniformLocation(program, "texture2"), 1);
+    // gl.activeTexture(gl.TEXTURE1);0
+    // gl.bindTexture(gl.TEXTURE_2D, textureArray[1].textureWebGL);
+    // gl.uniform1i(gl.getUniformLocation(program, "texture2"), 1);
     
     gl.activeTexture(gl.TEXTURE2);
     gl.bindTexture(gl.TEXTURE_2D, textureArray[2].textureWebGL);
     gl.uniform1i(gl.getUniformLocation(program, "texture3"), 2);
+
+    // dirt texture
+    gl.activeTexture(gl.TEXTURE3);
+    gl.bindTexture(gl.TEXTURE_2D, textureArray[3].textureWebGL);
+    gl.uniform1i(gl.getUniformLocation(program, "texture4"), 3);
     
+    // space texture
+    gl.activeTexture(gl.TEXTURE4);
+    gl.bindTexture(gl.TEXTURE_2D, textureArray[4].textureWebGL);
+    gl.uniform1i(gl.getUniformLocation(program, "texture5"), 4);
     
     gTranslate(-4,0,0) ;
     gPush() ;
