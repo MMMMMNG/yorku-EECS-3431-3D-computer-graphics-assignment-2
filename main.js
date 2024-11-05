@@ -241,6 +241,7 @@ window.onload = function init() {
     //
     program = initShaders( gl, "vertex-shader", "fragment-shader" );
     skyboxProgram = initShaders(gl, "skybox-vertex-shader", "skybox-fragment-shader");
+    skyboxSetup(gl);
     gl.useProgram( program );
     
  
@@ -478,6 +479,8 @@ function render() {
         drawCone() ;
     }
     gPop() ;
+
+    renderSkybox(gl, skyboxProgram, viewMatrix, projectionMatrix);
     
     if( animFlag )
         window.requestAnimFrame(render);

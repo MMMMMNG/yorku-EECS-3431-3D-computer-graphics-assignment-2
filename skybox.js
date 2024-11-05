@@ -3,20 +3,13 @@
 let skyboxQuadBufferInfo;
 let skyboxTexture;
 
-function skyboxSetup(gl, skyboxShaderProgram) {
-  // Get A WebGL context
-  /** @type {HTMLCanvasElement} */
-  var canvas = document.querySelector("#canvas");
-  var gl = canvas.getContext("webgl");
-  if (!gl) {
-    return;
-  }
+function skyboxSetup(gl) {
 
-  const skyboxQuadBufferInfo = primitives.createXYQuadBufferInfo(gl);
+  skyboxQuadBufferInfo = primitives.createXYQuadBufferInfo(gl);
 
   // Create a texture.
   skyboxTexture = gl.createTexture();
-  gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture);
+  gl.bindTexture(gl.TEXTURE_CUBE_MAP, skyboxTexture);
 
   const faceInfos = [
     {
@@ -63,7 +56,7 @@ function skyboxSetup(gl, skyboxShaderProgram) {
     image.src = url;
     image.addEventListener('load', function() {
       // Now that the image has loaded make copy it to the texture.
-      gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture);
+      gl.bindTexture(gl.TEXTURE_CUBE_MAP, skyboxTexture);
       gl.texImage2D(target, level, internalFormat, format, type, image);
       gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
     });
@@ -81,12 +74,8 @@ function skyboxSetup(gl, skyboxShaderProgram) {
 }
 
   // Draw the scene.
-  function renderSkybox(gl, skyboxProgramInfo, viewMatrix) {
+  function renderSkybox(gl, skyboxProgramInfo, viewMatrix, projectionMatrix) {
 
-    // Compute the projection matrix
-    var aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-    var projectionMatrix =
-        m4.perspective(fieldOfViewRadians, aspect, 1, 2000);
 
     // We only care about direciton so remove the translation
     var viewDirectionMatrix = m4.copy(viewMatrix);
@@ -112,6 +101,4 @@ function skyboxSetup(gl, skyboxShaderProgram) {
       u_skybox: skyboxTexture,
     });
     webglUtils.drawBufferInfo(gl, skyboxQuadBufferInfo);
-
-    requestAnimationFrame(drawScene);
   }
