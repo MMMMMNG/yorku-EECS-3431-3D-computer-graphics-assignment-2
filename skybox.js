@@ -97,32 +97,10 @@ function skyboxSetup(gl, skyboxShaderProgram) {
   // Draw the scene.
   function renderSkybox(gl, skyboxProgramInfo, viewMatrix) {
 
-    // Tell WebGL how to convert from clip space to pixels
-    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-
-    gl.enable(gl.CULL_FACE);
-    gl.enable(gl.DEPTH_TEST);
-
-    // Clear the canvas AND the depth buffer.
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
     // Compute the projection matrix
     var aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
     var projectionMatrix =
         m4.perspective(fieldOfViewRadians, aspect, 1, 2000);
-
-    // camera going in circle 2 units from origin looking at origin
-    var cameraPosition = [Math.cos(time * .1) * 2, 0, Math.sin(time * .1) * 2];
-    var target = [0, 0, 0];
-    var up = [0, 1, 0];
-    // Compute the camera's matrix using look at.
-    var cameraMatrix = m4.lookAt(cameraPosition, target, up);
-
-    // Make a view matrix from the camera matrix.
-    var viewMatrix = m4.inverse(cameraMatrix);
-
-    // Rotate the cube around the x axis
-    var worldMatrix = m4.xRotation(time * 0.11);
 
     // We only care about direciton so remove the translation
     var viewDirectionMatrix = m4.copy(viewMatrix);
