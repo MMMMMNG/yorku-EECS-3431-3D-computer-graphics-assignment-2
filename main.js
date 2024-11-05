@@ -417,13 +417,13 @@ function render() {
     }
 
     
-    // gl.activeTexture(gl.TEXTURE0);
-    // gl.bindTexture(gl.TEXTURE_2D, textureArray[0].textureWebGL);
-    // gl.uniform1i(gl.getUniformLocation(program, "texture1"), 0);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, textureArray[0].textureWebGL);
+    gl.uniform1i(gl.getUniformLocation(program, "texture1"), 0);
     
-    // gl.activeTexture(gl.TEXTURE1);0
-    // gl.bindTexture(gl.TEXTURE_2D, textureArray[1].textureWebGL);
-    // gl.uniform1i(gl.getUniformLocation(program, "texture2"), 1);
+    gl.activeTexture(gl.TEXTURE1);
+    gl.bindTexture(gl.TEXTURE_2D, textureArray[1].textureWebGL);
+    gl.uniform1i(gl.getUniformLocation(program, "texture2"), 1);
     
     // dirt texture
     gl.activeTexture(gl.TEXTURE2);
@@ -435,7 +435,8 @@ function render() {
     gl.bindTexture(gl.TEXTURE_2D, textureArray[3].textureWebGL);
     gl.uniform1i(gl.getUniformLocation(program, "texture4"), 3);
     
-    
+    drawFloor();
+
     gTranslate(-4,0,0) ;
     gPush() ;
     {
