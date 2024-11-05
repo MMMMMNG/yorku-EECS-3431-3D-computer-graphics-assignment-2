@@ -488,7 +488,7 @@ function render() {
     }
     gPop() ;
 
-    renderSkybox(gl, skyboxProgramInfo, projectionMatrix, eye, at, up);
+    renderSkybox(gl, eye, at, up);
     
     if( animFlag )
         window.requestAnimFrame(render);
