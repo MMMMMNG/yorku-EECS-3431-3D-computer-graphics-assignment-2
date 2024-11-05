@@ -1,6 +1,6 @@
 "use strict";
 
-function renderSkybox(gl, skyboxShaderProgram) {
+function skyboxSetup(gl, skyboxShaderProgram) {
   // Get A WebGL context
   /** @type {HTMLCanvasElement} */
   var canvas = document.querySelector("#canvas");
@@ -92,17 +92,10 @@ function renderSkybox(gl, skyboxShaderProgram) {
   var then = 0;
 
   requestAnimationFrame(drawScene);
+}
 
   // Draw the scene.
-  function drawScene(time) {
-    // convert to seconds
-    time *= 0.001;
-    // Subtract the previous time from the current time
-    var deltaTime = time - then;
-    // Remember the current time for the next frame.
-    then = time;
-
-    webglUtils.resizeCanvasToDisplaySize(gl.canvas);
+  function renderSkybox(gl, skyboxProgramInfo, viewMatrix) {
 
     // Tell WebGL how to convert from clip space to pixels
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
@@ -142,18 +135,6 @@ function renderSkybox(gl, skyboxShaderProgram) {
     var viewDirectionProjectionInverseMatrix =
         m4.inverse(viewDirectionProjectionMatrix);
 
-    // draw the cube
-    gl.depthFunc(gl.LESS);  // use the default depth test
-    gl.useProgram(envmapProgramInfo.program);
-    webglUtils.setBuffersAndAttributes(gl, envmapProgramInfo, cubeBufferInfo);
-    webglUtils.setUniforms(envmapProgramInfo, {
-      u_world: worldMatrix,
-      u_view: viewMatrix,
-      u_projection: projectionMatrix,
-      u_texture: texture,
-      u_worldCameraPosition: cameraPosition,
-    });
-    webglUtils.drawBufferInfo(gl, cubeBufferInfo);
 
     // draw the skybox
 
@@ -170,6 +151,3 @@ function renderSkybox(gl, skyboxShaderProgram) {
 
     requestAnimationFrame(drawScene);
   }
-}
-
-main();
