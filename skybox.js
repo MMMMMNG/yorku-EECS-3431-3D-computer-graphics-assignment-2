@@ -1,5 +1,8 @@
 "use strict";
 
+let skyboxQuadBufferInfo;
+let skyboxTexture;
+
 function skyboxSetup(gl, skyboxShaderProgram) {
   // Get A WebGL context
   /** @type {HTMLCanvasElement} */
@@ -9,18 +12,10 @@ function skyboxSetup(gl, skyboxShaderProgram) {
     return;
   }
 
-  // setup GLSL programs and lookup locations
-  const envmapProgramInfo = webglUtils.createProgramInfo(
-      gl, ["envmap-vertex-shader", "envmap-fragment-shader"]);
-  const skyboxProgramInfo = webglUtils.createProgramInfo(
-      gl, ["skybox-vertex-shader", "skybox-fragment-shader"]);
-
-  // create buffers and fill with vertex data
-  const cubeBufferInfo = primitives.createCubeBufferInfo(gl, 1);
-  const quadBufferInfo = primitives.createXYQuadBufferInfo(gl);
+  const skyboxQuadBufferInfo = primitives.createXYQuadBufferInfo(gl);
 
   // Create a texture.
-  const texture = gl.createTexture();
+  skyboxTexture = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture);
 
   const faceInfos = [
@@ -83,15 +78,6 @@ function skyboxSetup(gl, skyboxShaderProgram) {
   function degToRad(d) {
     return d * Math.PI / 180;
   }
-
-  var fieldOfViewRadians = degToRad(60);
-  var cameraYRotationRadians = degToRad(0);
-
-  var spinCamera = true;
-  // Get the starting time.
-  var then = 0;
-
-  requestAnimationFrame(drawScene);
 }
 
   // Draw the scene.
@@ -120,12 +106,12 @@ function skyboxSetup(gl, skyboxShaderProgram) {
     gl.depthFunc(gl.LEQUAL);
 
     gl.useProgram(skyboxProgramInfo.program);
-    webglUtils.setBuffersAndAttributes(gl, skyboxProgramInfo, quadBufferInfo);
+    webglUtils.setBuffersAndAttributes(gl, skyboxProgramInfo, skyboxQuadBufferInfo);
     webglUtils.setUniforms(skyboxProgramInfo, {
       u_viewDirectionProjectionInverse: viewDirectionProjectionInverseMatrix,
-      u_skybox: texture,
+      u_skybox: skyboxTexture,
     });
-    webglUtils.drawBufferInfo(gl, quadBufferInfo);
+    webglUtils.drawBufferInfo(gl, skyboxQuadBufferInfo);
 
     requestAnimationFrame(drawScene);
   }
