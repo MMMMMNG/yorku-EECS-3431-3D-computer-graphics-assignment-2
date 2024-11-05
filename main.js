@@ -393,7 +393,7 @@ function render() {
     eye[1] = eye[1] + 0 ;
    
     // set the projection matrix
-    projectionMatrix = ortho(left, right, bottom, ytop, near, far);
+    projectionMatrix = perspective(60, 1, near, far);
     
     // set the camera matrix
     viewMatrix = lookAt(eye, at , up);
