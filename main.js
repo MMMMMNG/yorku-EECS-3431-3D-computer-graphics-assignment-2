@@ -383,7 +383,7 @@ function gPush() {
 
 function render() {
     
-    //gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.useProgram( program );
     
     gl.uniform1i( gl.getUniformLocation(program,
@@ -403,9 +403,13 @@ function render() {
     modelMatrix = mat4() ;
     
     // apply the slider rotations
-    gRotate(RZ,0,0,1) ;
-    gRotate(RY,0,1,0) ;
-    gRotate(RX,1,0,0) ;
+    //TO CAMERA; NOT SCENE
+    viewMatrix = mult(viewMatrix, rotate(RZ,[0,0,1])) ;
+    viewMatrix = mult(viewMatrix, rotate(RY,[0,1,0])) ;
+    viewMatrix = mult(viewMatrix, rotate(RX,[1,0,0])) ;
+    //gRotate(RZ,0,0,1) ;
+    //gRotate(RY,0,1,0) ;
+    //gRotate(RX,1,0,0) ;
     
     // send all the matrices to the shaders
     setAllMatrices() ;
@@ -484,7 +488,7 @@ function render() {
     }
     gPop() ;
 
-    renderSkybox(gl, skyboxProgramInfo, viewMatrix, projectionMatrix);
+    renderSkybox(gl, skyboxProgramInfo, projectionMatrix, eye, at, up);
     
     if( animFlag )
         window.requestAnimFrame(render);

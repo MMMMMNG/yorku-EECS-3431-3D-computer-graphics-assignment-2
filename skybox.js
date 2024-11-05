@@ -74,8 +74,16 @@ function skyboxSetup(gl) {
 }
 
   // Draw the scene.
-  function renderSkybox(gl, skyboxProgramInfo, viewMatrix, projectionMatrix) {
+  function renderSkybox(gl, skyboxProgramInfo, cameraPosition, target, up) {
 
+    // Compute the projection matrix
+    var aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+    var projectionMatrix =
+        m4.perspective(60 * Math.PI / 180, aspect, 1, 100);
+    // Compute the camera's matrix using look at.
+    var cameraMatrix = m4.lookAt(cameraPosition, target, up);
+    // Make a view matrix from the camera matrix.
+    var viewMatrix = m4.inverse(cameraMatrix);
 
     // We only care about direciton so remove the translation
     var viewDirectionMatrix = m4.copy(viewMatrix);
@@ -93,12 +101,26 @@ function skyboxSetup(gl) {
 
     // let our quad pass the depth test at 1.0
     gl.depthFunc(gl.LEQUAL);
+    gl.enable(gl.CULL_FACE);
+    gl.enable(gl.DEPTH_TEST);
 
     gl.useProgram(skyboxProgramInfo.program);
-    webglUtils.setBuffersAndAttributes(gl, skyboxProgramInfo, skyboxQuadBufferInfo);
-    webglUtils.setUniforms(skyboxProgramInfo, {
-      u_viewDirectionProjectionInverse: viewDirectionProjectionInverseMatrix,
-      u_skybox: skyboxTexture,
-    });
-    webglUtils.drawBufferInfo(gl, skyboxQuadBufferInfo);
+    var viewDirectionProjectionMatrix =
+        m4.multiply(projectionMatrix, viewMatrix);
+    var viewDirectionProjectionInverseMatrix =
+        m4.inverse(viewDirectionProjectionMatrix);
+
+    // Set the uniforms
+    gl.uniformMatrix4fv(
+        viewDirectionProjectionInverseLocation, false,
+        viewDirectionProjectionInverseMatrix);
+
+    // Tell the shader to use texture unit 0 for u_skybox
+    gl.uniform1i(skyboxLocation, 0);
+
+    // let our quad pass the depth test at 1.0
+    gl.depthFunc(gl.LEQUAL);
+
+    // Draw the geometry.
+    gl.drawArrays(gl.TRIANGLES, 0, 1 * 6);
   }
