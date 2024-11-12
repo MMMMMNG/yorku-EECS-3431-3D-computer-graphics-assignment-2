@@ -84,7 +84,7 @@ class Bear {
 
             // draw ears
             gPush(); {
-                gTranslate(0.4, 0.8, -0.8);
+                gTranslate(0.4, 1.5, 3.2);
                 this.drawEars();
             }
             gPop();
