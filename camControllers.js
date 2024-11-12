@@ -38,3 +38,49 @@ function getStraightLineLookAtCamController(from, to, lookTarget) {
         up[2] = 0;
     };
 }
+
+
+function getDollyZoomCamController(from, to, targetDistance) {
+    // Precompute the initial distance from 'from' to 'to' for setting 'at' and 'up'
+    const direction = [
+        to[0] - from[0],
+        to[1] - from[1],
+        to[2] - from[2],
+    ];
+    const initialDistance = Math.sqrt(direction[0]**2 + direction[1]**2 + direction[2]**2);
+
+    // Normalize the direction vector
+    const directionNormalized = [
+        direction[0] / initialDistance,
+        direction[1] / initialDistance,
+        direction[2] / initialDistance,
+    ];
+
+    // Compute 'at' point: far ahead in the direction of movement
+    at[0] = to[0] + directionNormalized[0];
+    at[1] = to[1] + directionNormalized[1];
+    at[2] = to[2] + directionNormalized[2];
+
+    // Compute 'up' vector in the plane made with the y-axis
+    const upYPlane = [
+        -directionNormalized[2], 0, directionNormalized[0]
+    ];
+    up[0] = upYPlane[0];
+    up[1] = 1;
+    up[2] = upYPlane[2];
+
+    // Return the controller function for the dolly zoom effect
+    return function theController(time) {
+        // Interpolate the camera position from 'from' to 'to'
+        eye[0] = from[0] + directionNormalized[0] * initialDistance * time;
+        eye[1] = from[1] + directionNormalized[1] * initialDistance * time;
+        eye[2] = from[2] + directionNormalized[2] * initialDistance * time;
+
+        // Calculate current distance to the target object based on the interpolation
+        const currentDistance = initialDistance * (1 - time) + targetDistance * time;
+
+        // Adjust FOV based on the dolly zoom effect formula
+        const focalLength = 1 / Math.tan((fov * Math.PI) / 360); // Convert FOV to focal length
+        fov = 2 * Math.atan(targetDistance / currentDistance * focalLength) * (180 / Math.PI); // Convert back to degrees
+    };
+}
