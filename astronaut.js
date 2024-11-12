@@ -26,7 +26,7 @@ function drawAstronaut(TIME) {
         gPop();
 
         //left leg
-        gTranslate(x-0.75, y-2.5, 0);
+        gTranslate(x-0.75, 0, 0);
         drawLeg(TIME);
 
         // right leg

@@ -8,3 +8,12 @@ function drawFloor() {
     }
     gPop();
 }
+
+function drawBase() {
+    gPush(); {
+        gTranslate(-2, 0, 4);
+        //texture?
+        drawSphere();
+    }
+    gPop();    
+}
