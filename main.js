@@ -33,7 +33,7 @@ var ambientColor, diffuseColor, specularColor;
 var modelMatrix, viewMatrix ;
 var modelViewMatrix, projectionMatrix, normalMatrix;
 var modelViewMatrixLoc, projectionMatrixLoc, normalMatrixLoc;
-var eye;
+var eye = vec3(0,0,0);
 var at = vec3(0.0, 0.0, 0.0);
 var up = vec3(0.0, 1.0, 0.0);
 
@@ -48,6 +48,7 @@ var resetTimerFlag = true ;
 var animFlag = false ;
 var prevTime = 0.0 ;
 var useTextures = 1 ;
+var timeline = new Timeline();
 
 // ------------ Images for textures stuff --------------
 var texSize = 64;
@@ -306,7 +307,7 @@ window.onload = function init() {
     // Recursive wait for the textures to load
     waitForTextures(textureArray) ;
     //setTimeout (render, 100) ;
-    
+    timeline.registerAll();    
 }
 
 // Sets the modelview and normal matrix in the shaders
@@ -388,9 +389,6 @@ function render() {
     
     gl.uniform1i( gl.getUniformLocation(program,
         "useTextures"), useTextures );
-    
-    eye = vec3(0,0,10);
-    eye[1] = eye[1] + 0 ;
    
     // set the projection matrix
     projectionMatrix = perspective(60, 1, near, far);
@@ -455,6 +453,7 @@ function render() {
     renderSkybox(gl, eye, at, up);
     
     if( animFlag )
+        timeline.doAnims(TIME);
         window.requestAnimFrame(render);
 }
 
