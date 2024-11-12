@@ -11,7 +11,7 @@ function drawFloor() {
 
 function drawBase() {
     gPush(); {
-        gTranslate(-2, 0, 4);
+        gTranslate(-2, 5, 4);
         //texture?
         drawSphere();
     }
