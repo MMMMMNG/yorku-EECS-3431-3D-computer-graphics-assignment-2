@@ -446,49 +446,11 @@ function render() {
     gl.bindTexture(gl.TEXTURE_2D, textureArray[3].textureWebGL);
     gl.uniform1i(gl.getUniformLocation(program, "texture4"), 3);
     
-    drawFloor();
+    //drawFloor();
 
-    drawAstronaut();
+    drawAstronaut(TIME);
 
-    gTranslate(-4,0,0) ;
-    gPush() ;
-    {
-        gRotate(TIME*180/3.14159,0,1,0) ;
-        setColor(vec4(1.0,0.0,0.0,1.0)) ;
-        drawSphere() ;
-    }
-    gPop() ;
-    
-    gPush() ;
-    {
-        gTranslate(3,0,0) ;
-        setColor(vec4(0.0,1.0,0.0,1.0)) ;
-        gRotate(TIME*180/3.14159,0,1,0) ;
-        drawCube() ;
-    }
-    gPop() ;
-    
-   
-    
-    gPush() ;
-    {
-        gTranslate(5,0,0) ;
-        setColor(vec4(0.0,1.0,1.0,1.0)) ;
-        gRotate(TIME*180/3.14159,0,1,0) ;
-        drawCylinder() ;
-    }
-    gPop() ;
-    
-    
-    
-    gPush() ;
-    {
-        gTranslate(7,0,0) ;
-        setColor(vec4(1.0,1.0,0.0,1.0)) ;
-        gRotate(TIME*180/3.14159,0,1,0) ;
-        drawCone() ;
-    }
-    gPop() ;
+    //drawAstronautMining();
 
     renderSkybox(gl, eye, at, up);
     
