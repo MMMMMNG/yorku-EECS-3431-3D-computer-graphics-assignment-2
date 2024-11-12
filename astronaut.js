@@ -3,8 +3,12 @@ class Astronaut {
         this.x = 2;
         this.y = 0;
         this.z = 0;
-        this.currentLocation = vec3(this.x,this.y,this.z);
-
+        this.currentLocation = vec3(this.x, this.y, this.z);
+        this.leftShoulderAngle = 1;
+        this.leftLegAngle = 2;
+        this.rightLegAngle = 3;
+        this.rightShoulderAngle = 4;
+        this.doAnimInDraw = false
     }
 
     draw(TIME) {
@@ -71,10 +75,11 @@ class Astronaut {
         const freq = 1;
         var angle;
         if (arm == "right") {
-            angle = (-1) * Math.sin(TIME * freq) * amplitude;
+            angle = this.doAnimInDraw ? (-1) * Math.sin(TIME * freq) * amplitude : this.rightShoulderAngle;
         } else {
-            angle = Math.sin(TIME * freq) * amplitude;
+            angle = this.doAnimInDraw ?  Math.sin(TIME * freq) * amplitude : this.leftShoulderAngle;
         }
+
 
 
         gPush(); {
@@ -119,11 +124,11 @@ class Astronaut {
         const amplitude = 30;
         const freq = 1;
         var angle;
-        if (leg == "right") {
-            angle = (-1) * Math.sin(TIME * freq) * amplitude;
-        } else {
-            angle = Math.sin(TIME * freq) * amplitude;
-        }
+            if (leg == "right") {
+                angle = this.doAnimInDraw ? (-1) * Math.sin(TIME * freq) * amplitude : this.rightLegAngle;
+            } else {
+                angle = this.doAnimInDraw ? Math.sin(TIME * freq) * amplitude : this.leftLegAngle;
+            }
 
         gPush(); {
             // hip
