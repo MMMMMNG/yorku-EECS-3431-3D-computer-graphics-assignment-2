@@ -1,4 +1,5 @@
 function drawFloor() {
+    // floor
     gPush();
     {
         gTranslate(right/2,bottom,0) ;
@@ -7,6 +8,8 @@ function drawFloor() {
         drawCube() ;
     }
     gPop();
+
+    // draw scattered rocks
 }
 
 function drawBase() {
@@ -16,4 +19,11 @@ function drawBase() {
         drawSphere();
     }
     gPop();    
+}
+
+function drawShip() {
+    gPush();{
+
+    }
+    gPop();
 }

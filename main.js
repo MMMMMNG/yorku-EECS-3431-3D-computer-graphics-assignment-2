@@ -466,6 +466,8 @@ function render() {
     gl.uniform1i(gl.getUniformLocation(program, "texture4"), 3);
     
     drawFloor();
+    //drawBase();
+    //drawShip();
 
     astronaut.draw(TIME);
 
