@@ -1,6 +1,7 @@
 class Timeline {
     constructor() {
         this.controllers = [];
+        this.onceControllers = [];
     }
 
     /**
@@ -11,6 +12,10 @@ class Timeline {
      */
     from_to_do(start, end, controller) {
         this.controllers.push({ start, end, controller });
+    }
+
+    do_once_at(start, controller){
+        this.onceControllers.push({start, controller});
     }
 
     /**
@@ -25,10 +30,27 @@ class Timeline {
                 controller(progress);
             }
         });
+
+        this.onceControllers.forEach(({start, controller}) => {
+            if(currtime >= start){
+                controller();
+            }
+        });
+        this.onceControllers = this.onceControllers.filter(i => i.start > currtime);
     }
 
-    registerAll(){
+    registerAll() {
         var bc = getBulletCamController(vec3(0,0,0),10);
         this.from_to_do(3,10, bc);
+        this.do_once_at(0.1, () => astronaut.doAnimInDraw = true);
+        this.do_once_at(10, () => {
+            astronaut.leftLegAngle = 60;
+            astronaut.rightLegAngle = -60;
+            astronaut.leftShoulderAngle = 100;
+            astronaut.rightShoulderAngle = -100;
+            astronaut.doAnimInDraw = false;
+        });
+        var sl = getStraightLineLookAtCamController([0,0,10], [10,10,10], [0,0,0]);
+        this.from_to_do(14,20,sl);
     }
 }

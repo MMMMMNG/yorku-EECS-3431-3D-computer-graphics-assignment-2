@@ -19,3 +19,22 @@ function getBulletCamController(centerOfRot, radius) {
         up[2] = 0;
     };
 }
+
+function getStraightLineLookAtCamController(from, to, lookTarget) {
+    return function theController(time) {
+        // Interpolate the camera position (eye) from 'from' to 'to' based on time (0 to 1)
+        eye[0] = from[0] + (to[0] - from[0]) * time;
+        eye[1] = from[1] + (to[1] - from[1]) * time;
+        eye[2] = from[2] + (to[2] - from[2]) * time;
+
+        // Set 'at' to always look at the lookTarget position
+        at[0] = lookTarget[0];
+        at[1] = lookTarget[1];
+        at[2] = lookTarget[2];
+
+        // Keep 'up' pointing in the y-direction
+        up[0] = 0;
+        up[1] = 1;
+        up[2] = 0;
+    };
+}
