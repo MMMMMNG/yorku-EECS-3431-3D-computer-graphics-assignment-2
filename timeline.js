@@ -41,7 +41,7 @@ class Timeline {
 
     registerAll() {
         //var bc = getBulletCamController(vec3(0,0,0),10);
-        var dolley = getDollyZoomCamController([100, 1, 0], [10, 1, 0], 91, 6);
+        /*var dolley = getDollyZoomCamController([100, 1, 0], [10, 1, 0], 91, 6);
         this.from_to_do(3,10, dolley);
         this.do_once_at(0.1, () => astronaut.doAnimInDraw = true);
         this.do_once_at(10, () => {
@@ -52,6 +52,13 @@ class Timeline {
             astronaut.doAnimInDraw = false;
         });
         var sl = getStraightLineLookAtCamController([0,0,10], [10,10,10], [0,0,0]);
-        this.from_to_do(14,20,sl);
+        this.from_to_do(14,20,sl);*/
+
+        var one = getFromCurrentToTargetCamController([10,10,10],[0,0,0]);
+        var two = getFromCurrentToTargetCamController([-10,10,-10],[0,4,0]);
+        var three = getFromCurrentToTargetCamController([-5,1,-5],[10,10,10]);
+        timeline.from_to_do(1,8,one);
+        timeline.from_to_do(8,16,two);
+        timeline.from_to_do(16,20,three);
     }
 }
