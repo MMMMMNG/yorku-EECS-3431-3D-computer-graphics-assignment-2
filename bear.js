@@ -114,17 +114,60 @@ class Bear {
         gPush(); {
             // thigh
             gTranslate(0, -0.5, 0);
-            this.drawScaledCube(0.3, 0.5, 0.3);
+            this.drawScaledCube(0.35, 0.5, 0.35);
 
             gPush();{
-                // feet
-                gTranslate(0,-0.8,0);
+                gTranslate(0,-0.6,0);
                 // rotation appendix
-                this.drawScaledSphere(0.3, 0.3, 0.3);
+                this.drawScaledSphere(0.4, 0.4, 0.4);
+                
+                gTranslate(0, -0.2, 0.2);
                 // foot
                 this.drawScaledSphere(0.3, 0.3, 0.5);
+
+                //4 nails
+                gPush(); {
+                    gRotate(10, 0, 1, 0);
+                    gTranslate(0.05, 0,0);
+                    this.drawFoot();
+                }
+                gPop();
+
+                gPush(); {
+                    gRotate(-10,0, 1, 0);
+                    gTranslate(-0.05, 0,0);
+                    this.drawFoot();
+                }
+                gPop();
+
+                gPush(); {
+                    gRotate(-20,0, 1, 0);
+                    gTranslate(-0.1, 0,0);
+                    this.drawFoot();
+                }
+                gPop();
+
+                gPush(); {
+                    gRotate(20,0, 1, 0);
+                    gTranslate(0.1, 0,0);
+                    this.drawFoot();
+                }
+                gPop();
+                
             }
             gPop();
+        }
+        gPop();
+    }
+
+    drawFoot() {
+        gPush(); {
+            gTranslate(0,0,0.5);
+            this.drawScaledSphere(0.1,0.1,0.1);
+            
+            gTranslate(0,0,0.1);
+            gScale(0.1,0.1,0.1);
+            drawCone();
         }
         gPop();
     }
@@ -154,10 +197,12 @@ class Bear {
         gPush(); {
             gTranslate(2, 5, 0);
             //gRotate(90, 0, 0);
-            this.drawCone();
+
+            gScale(0.2,0.2,0.2);
+            drawCone();
 
             gTranslate(-2, 0, 0);
-            this.drawCone();
+            drawCone();
         }
         gPop();
     }
