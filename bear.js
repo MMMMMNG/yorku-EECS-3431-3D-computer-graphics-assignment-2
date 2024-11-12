@@ -86,7 +86,7 @@ class Bear {
 
             // draw ears
             gPush(); {
-                gTranslate(0, 2, 4);
+                gTranslate(0.4, 0.8, -0.8);
                 this.drawEars();
             }
             gPop();
@@ -107,18 +107,17 @@ class Bear {
 
         gPush(); {
             // hip
+            // ROTATE HERE FOR ALL LEGS
+            //gRotate(20, 1, 0, 0);
             this.drawScaledSphere(0.5, 0.5, 0.5);
-        }
-        gPop();
-
-        gPush(); {
             // thigh
             gTranslate(0, -0.5, 0);
             this.drawScaledCube(0.35, 0.5, 0.35);
 
             gPush();{
                 gTranslate(0,-0.6,0);
-                // rotation appendix
+                // ROTATE HERE appendix for foot
+                //gRotate(20, 0, 1, 0);
                 this.drawScaledSphere(0.4, 0.4, 0.4);
                 
                 gTranslate(0, -0.2, 0.2);
@@ -195,14 +194,24 @@ class Bear {
 
     drawEars() {
         gPush(); {
-            gTranslate(2, 5, 0);
-            //gRotate(90, 0, 0);
+            
+            gRotate(-90, 1, 0, 0);
+            gScale(0.2,0.2,0.5);
 
-            gScale(0.2,0.2,0.2);
-            drawCone();
-
-            gTranslate(-2, 0, 0);
-            drawCone();
+            //right
+            gPush();{
+                gRotate(20, 0, 1, 0);
+                drawCone();
+            }
+            gPop();
+            
+            gTranslate(-3.6, 1, 0);
+            // left
+            gPush();{
+                gRotate(-20, 0, 1, 0);
+                drawCone();
+            }
+            gPop();
         }
         gPop();
     }
