@@ -4,10 +4,10 @@ class Astronaut {
         this.y = 0;
         this.z = 0;
         this.currentLocation = vec3(this.x, this.y, this.z);
-        this.leftShoulderAngle = 1;
-        this.leftLegAngle = 2;
-        this.rightLegAngle = 3;
-        this.rightShoulderAngle = 4;
+        this.leftShoulderAngle = 50;
+        this.leftLegAngle = 60;
+        this.rightLegAngle = 70;
+        this.rightShoulderAngle = 90;
         this.doAnimInDraw = false
     }
 
