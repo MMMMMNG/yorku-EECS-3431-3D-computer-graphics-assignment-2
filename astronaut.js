@@ -141,16 +141,15 @@ class Astronaut {
         gPop();
 
         gPush(); {
-            // thigh
-            gTranslate(0, -halfThigh, 0);
             // rotate here to oscillate
             gRotate(angle, 1, 0, 0);
+            // thigh
+            gTranslate(0, -halfThigh, 0);
             this.drawScaledSphere(0.5, halfThigh, 0.5);
             gTranslate(0,-halfThigh,0);
 
             gPush(); {
-                // knee
-                gTranslate(0, -0.5, 0);
+                //knee
                 this.drawScaledSphere(0.5, 0.5, 0.5);
 
                 gPush(); {
