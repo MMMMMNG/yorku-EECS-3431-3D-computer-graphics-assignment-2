@@ -90,9 +90,9 @@ class Astronaut {
 
         gPush(); {
             //armthis.
-            gTranslate(0, -0.7, 0);
+            gTranslate(0, -0.1, 0);
             gRotate(angle*0.5, 1, 0, 0);
-            gTranslate(0, 0.2, 0);
+            gTranslate(0, -0.5, 0);
             this.drawScaledSphere(0.2, 0.5, 0.2);
 
             gPush(); {
@@ -102,8 +102,8 @@ class Astronaut {
 
                 gPush(); {
                     // forearm
-                    gTranslate(0, -0.2, 0);
                     gRotate(angle, 1, 0, 0);
+                    gTranslate(0, -0.6, 0);
                     this.drawScaledSphere(0.2, 0.5, 0.2);
                     gPush(); {
                         // hand
