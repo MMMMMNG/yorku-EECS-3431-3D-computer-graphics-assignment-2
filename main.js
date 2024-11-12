@@ -469,8 +469,6 @@ function render() {
 
     astronaut.draw(TIME);
 
-    //drawAstronautMining();
-
     bear.draw(TIME);
 
     renderSkybox(gl, eye, at, up);

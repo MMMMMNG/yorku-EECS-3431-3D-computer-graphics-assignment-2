@@ -49,17 +49,15 @@ class Bear {
                 // left arm
                 gTranslate(0, 0, 3);
                 this.drawAppendage(TIME, "left");
-
-                
-
-                
             }
             gPop();
+
             // Head and Ears
             gPush();
             {
                 // neck
                 gTranslate(0, 0.5, 2.3);
+
                 this.drawScaledSphere(0.7, 0.7, 0.7);
                 // head
                 gTranslate(0, 0.3, 0.8);
@@ -228,6 +226,7 @@ class Bear {
             this.drawScaledCube(0.15, 0.1, 0.2);
 
         }
+        gPop();
     }
 
     drawScaledCube(sx, sy, sz) {
