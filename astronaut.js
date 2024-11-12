@@ -1,5 +1,5 @@
 class Astronaut {
-    constructor(){
+    constructor() {
         this.x = 2;
         this.y = 0;
         this.z = 0;
@@ -9,6 +9,10 @@ class Astronaut {
         this.rightLegAngle = 70;
         this.rightShoulderAngle = 90;
         this.doAnimInDraw = false
+        this.upperArmLength = 1;
+        this.foreArmLength = 1;
+        this.thighLength = 1.4;
+        this.calveLength = 1;
     }
 
     draw(TIME) {
@@ -20,7 +24,7 @@ class Astronaut {
             this.currentLocation = modelMatrix; // save this matrix for animation continuation from previous location
             //setColor(vec4(1.0,0.0,0.0,1.0)) ;
             this.drawScaledSphere(1.5, 2, 1.2);
-            
+
             // draw air tank
             gPush(); {
                 gTranslate(0, 0.4, -1);
@@ -71,43 +75,41 @@ class Astronaut {
     }
 
     drawArm(TIME, arm) {
+        const upperHalf = this.upperArmLength / 2;
+        const foreHalf = this.foreArmLength / 2;
         const amplitude = 20;
         const freq = 1;
         var angle;
         if (arm == "right") {
             angle = this.doAnimInDraw ? (-1) * Math.sin(TIME * freq) * amplitude : this.rightShoulderAngle;
         } else {
-            angle = this.doAnimInDraw ?  Math.sin(TIME * freq) * amplitude : this.leftShoulderAngle;
+            angle = this.doAnimInDraw ? Math.sin(TIME * freq) * amplitude : this.leftShoulderAngle;
         }
 
 
+        // shoulder
+        this.drawScaledSphere(0.2, 0.2, 0.2);
 
-        gPush(); {
-            // shoulder
-            this.drawScaledSphere(0.2, 0.2, 0.2);
-        }
-        gPop();
 
         gPush(); {
             //armthis.
-            gTranslate(0, -0.1, 0);
-            gRotate(angle*0.5, 1, 0, 0);
-            gTranslate(0, -0.5, 0);
-            this.drawScaledSphere(0.2, 0.5, 0.2);
+            gRotate(angle * 0.5, 1, 0, 0);
+            gTranslate(0, -upperHalf, 0);
+            this.drawScaledSphere(0.2, upperHalf, 0.2);
 
             gPush(); {
                 //elbow
-                gTranslate(0, -0.5, 0);
+                gTranslate(0, -upperHalf, 0);
                 this.drawScaledSphere(0.2, 0.2, 0.2);
 
                 gPush(); {
                     // forearm
                     gRotate(angle, 1, 0, 0);
-                    gTranslate(0, -0.6, 0);
-                    this.drawScaledSphere(0.2, 0.5, 0.2);
+                    gTranslate(0, -foreHalf, 0);
+                    this.drawScaledSphere(0.2, foreHalf, 0.2);
                     gPush(); {
                         // hand
-                        gTranslate(0, -0.5, 0);
+                        gTranslate(0, -foreHalf, 0);
                         this.drawScaledSphere(0.3, 0.3, 0.3);
                     }
                     gPop();
@@ -121,14 +123,16 @@ class Astronaut {
     }
 
     drawLeg(TIME, leg) {
+        const halfThigh = this.thighLength / 2;
+        const halfCalve = this.calveLength / 2;
         const amplitude = 30;
         const freq = 1;
         var angle;
-            if (leg == "right") {
-                angle = this.doAnimInDraw ? (-1) * Math.sin(TIME * freq) * amplitude : this.rightLegAngle;
-            } else {
-                angle = this.doAnimInDraw ? Math.sin(TIME * freq) * amplitude : this.leftLegAngle;
-            }
+        if (leg == "right") {
+            angle = this.doAnimInDraw ? (-1) * Math.sin(TIME * freq) * amplitude : this.rightLegAngle;
+        } else {
+            angle = this.doAnimInDraw ? Math.sin(TIME * freq) * amplitude : this.leftLegAngle;
+        }
 
         gPush(); {
             // hip
@@ -138,10 +142,11 @@ class Astronaut {
 
         gPush(); {
             // thigh
-            gTranslate(0, -0.5, 0);
+            gTranslate(0, -halfThigh, 0);
             // rotate here to oscillate
             gRotate(angle, 1, 0, 0);
-            this.drawScaledSphere(0.5, 0.7, 0.5);
+            this.drawScaledSphere(0.5, halfThigh, 0.5);
+            gTranslate(0,-halfThigh,0);
 
             gPush(); {
                 // knee
@@ -150,11 +155,11 @@ class Astronaut {
 
                 gPush(); {
                     // leg
-                    gTranslate(0, -0.5, 0);
-                    this.drawScaledSphere(0.3, 0.5, 0.3);
+                    gTranslate(0, -halfCalve, 0);
+                    this.drawScaledSphere(0.3, halfCalve, 0.3);
                     gPush(); {
                         // boot
-                        gTranslate(0, -0.5, 0.2);
+                        gTranslate(0, -halfCalve, 0.2);
                         this.drawScaledSphere(0.3, 0.3, 0.5);
                     }
                     gPop();
