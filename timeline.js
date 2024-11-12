@@ -39,7 +39,7 @@ class Timeline {
         this.onceControllers = this.onceControllers.filter(i => i.start > currtime);
     }
 
-    registerAll(){
+    registerAll() {
         var bc = getBulletCamController(vec3(0,0,0),10);
         this.from_to_do(3,10, bc);
         this.do_once_at(0.1, () => astronaut.doAnimInDraw = true);
@@ -50,5 +50,7 @@ class Timeline {
             astronaut.rightShoulderAngle = -100;
             astronaut.doAnimInDraw = false;
         });
+        var sl = getStraightLineLookAtCamController([0,0,10], [10,10,10], [0,0,0]);
+        this.from_to_do(14,20,sl);
     }
 }
