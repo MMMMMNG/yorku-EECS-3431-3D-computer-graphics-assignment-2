@@ -1,6 +1,6 @@
 class Astronaut {
     constructor(){
-        this.x = 0;
+        this.x = 2;
         this.y = 0;
         this.z = 0;
         this.currentLocation = vec3(this.x,this.y,this.z);
@@ -16,6 +16,14 @@ class Astronaut {
             this.currentLocation = modelMatrix; // save this matrix for animation continuation from previous location
             //setColor(vec4(1.0,0.0,0.0,1.0)) ;
             this.drawScaledSphere(1.5, 2, 1.2);
+            
+            // draw air tank
+            gPush(); {
+                gTranslate(0, 0.4, -1);
+                this.drawScaledCube(1.2, 1.5, 0.5);
+            }
+            gPop();
+
             gPush(); {
                 // Right
                 gTranslate(1.5, 0.8, 0);
@@ -59,7 +67,7 @@ class Astronaut {
     }
 
     drawArm(TIME, arm) {
-        const amplitude = 30;
+        const amplitude = 20;
         const freq = 1;
         var angle;
         if (arm == "right") {
@@ -78,7 +86,8 @@ class Astronaut {
         gPush(); {
             //armthis.
             gTranslate(0, -0.7, 0);
-            gRotate(angle, 1, 0, 0);
+            gRotate(angle*0.5, 1, 0, 0);
+            gTranslate(0, 0.2, 0);
             this.drawScaledSphere(0.2, 0.5, 0.2);
 
             gPush(); {
@@ -89,6 +98,7 @@ class Astronaut {
                 gPush(); {
                     // forearm
                     gTranslate(0, -0.2, 0);
+                    gRotate(angle, 1, 0, 0);
                     this.drawScaledSphere(0.2, 0.5, 0.2);
                     gPush(); {
                         // hand

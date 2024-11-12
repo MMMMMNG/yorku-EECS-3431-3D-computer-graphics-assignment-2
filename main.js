@@ -50,6 +50,7 @@ var prevTime = 0.0 ;
 var useTextures = 1 ;
 var timeline = new Timeline();
 var astronaut = new Astronaut();
+var bear = new Bear();
 
 // ------------ Images for textures stuff --------------
 var texSize = 64;
@@ -450,6 +451,8 @@ function render() {
     astronaut.draw(TIME);
 
     //drawAstronautMining();
+
+    bear.draw(TIME);
 
     renderSkybox(gl, eye, at, up);
     
