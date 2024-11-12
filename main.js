@@ -383,9 +383,27 @@ function gPop() {
 function gPush() {
     MS.push(modelMatrix) ;
 }
+let lastFPStime = performance.now();
+let frameCount = 0;
+let fps = 0;
 
 function render() {
-    
+    const currentFPStime = performance.now();
+    frameCount++;
+
+    // Calculate elapsed time
+    const elapsed = currentFPStime - lastFPStime;
+
+    // Update FPS every 2 seconds (2000 ms)
+    if (elapsed >= 2000) {
+        fps = frameCount / (elapsed / 1000); // Calculate FPS
+        console.log(`FPS: ${fps.toFixed(2)}`);
+
+        // Reset counters
+        frameCount = 0;
+        lastFPStime = currentFPStime;
+    }
+
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.useProgram( program );
     
