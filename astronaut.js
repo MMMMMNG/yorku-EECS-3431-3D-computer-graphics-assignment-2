@@ -11,7 +11,7 @@ function drawAstronaut(TIME) {
         // Torso
         gTranslate(x, y, z);
         currentLocation = modelMatrix; // save this matrix for animation continuation from previous location
-        setColor(vec4(1.0,0.0,0.0,1.0)) ;
+        //setColor(vec4(1.0,0.0,0.0,1.0)) ;
         drawScaledSphere(1.5, 2, 1.2);
         gPush(); {
             // Right
@@ -28,10 +28,18 @@ function drawAstronaut(TIME) {
         gPush();
         {
             gTranslate(0, 2.6, 0);
-            drawScaledSphere(0.6, 0.6, 0.6);
+            drawScaledSphere(0.8, 0.8, 0.8);
 
             // apply transparent texture to helmet?
-            drawScaledSphere(0.8, 0.8, 0.8);
+            //drawScaledSphere(1.0, 1.0, 1.0);
+
+            // right eye
+            gTranslate(0.3,0,0.65);
+            drawEye();
+            
+            // left Eye
+            gTranslate(-0.5, 0, 0);
+            drawEye();
 
         }
         gPop();
@@ -136,6 +144,26 @@ function drawLeg(TIME, leg) {
             gPop();            
         }
         gPop();
+    }
+    gPop();
+}
+
+function drawEye() {
+    gPush() ;
+    {
+        setColor(vec4(1.0,1.0,1.0,1.0));
+        drawScaledSphere(0.2, 0.2, 0.2);
+
+        setColor(vec4(0.0,0.0,0.0,1.0));
+
+        gTranslate(0.0, 0.0, 0.15);
+        drawScaledSphere(0.1, 0.1, 0.1);
+
+        // eyebrows
+        gTranslate(0,0.2,0);
+        drawScaledCube(0.1, 0.05, 0.05);
+
+        setColor(vec4(1.0,0.0,0.0,1.0));    
     }
     gPop();
 }

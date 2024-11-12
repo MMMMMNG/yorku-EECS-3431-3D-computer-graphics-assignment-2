@@ -446,7 +446,7 @@ function render() {
     gl.bindTexture(gl.TEXTURE_2D, textureArray[3].textureWebGL);
     gl.uniform1i(gl.getUniformLocation(program, "texture4"), 3);
     
-    //drawFloor();
+    drawFloor();
 
     drawAstronaut(TIME);
 
