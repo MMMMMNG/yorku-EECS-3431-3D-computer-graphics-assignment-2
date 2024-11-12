@@ -7,6 +7,7 @@ var program ;
 
 var near = 1;
 var far = 100;
+let fov = 60;
 
 
 var left = -6.0;
@@ -411,7 +412,7 @@ function render() {
         "useTextures"), useTextures );
    
     // set the projection matrix
-    projectionMatrix = perspective(60, 1, near, far);
+    projectionMatrix = perspective(fov, 1, near, far);
     
     // set the camera matrix
     viewMatrix = lookAt(eye, at , up);

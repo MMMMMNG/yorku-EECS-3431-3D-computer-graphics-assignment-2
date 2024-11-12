@@ -40,8 +40,9 @@ class Timeline {
     }
 
     registerAll() {
-        var bc = getBulletCamController(vec3(0,0,0),10);
-        this.from_to_do(3,10, bc);
+        //var bc = getBulletCamController(vec3(0,0,0),10);
+        var dolley = getDollyZoomCamController([100, 1, 0], [10, 1, 0], 91, 6);
+        this.from_to_do(3,10, dolley);
         this.do_once_at(0.1, () => astronaut.doAnimInDraw = true);
         this.do_once_at(10, () => {
             astronaut.leftLegAngle = 60;
