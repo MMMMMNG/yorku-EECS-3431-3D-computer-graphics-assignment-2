@@ -49,6 +49,7 @@ var animFlag = false ;
 var prevTime = 0.0 ;
 var useTextures = 1 ;
 var timeline = new Timeline();
+var astronaut = new Astronaut();
 
 // ------------ Images for textures stuff --------------
 var texSize = 64;
@@ -446,7 +447,7 @@ function render() {
     
     drawFloor();
 
-    drawAstronaut(TIME);
+    astronaut.draw(TIME);
 
     //drawAstronautMining();
 
