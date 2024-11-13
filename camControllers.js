@@ -84,3 +84,35 @@ function getDollyZoomCamController(from, to, targetDistance, left) {
         fov = Math.atan(left / distToTar) * (180 / Math.PI); // back to degrees
     };
 }
+
+function getFromCurrentToTargetCamController(targetEye, targetAt, targetUp = [0, 1, 0]) {
+    let firstTime = true;
+    let fromEye = [0, 0, 0];
+    let fromAt = [0, 0, 0];
+    let fromUp = [0, 1, 0];
+
+    return function theController(time) {
+        if (firstTime) {
+            firstTime = false;
+            // Capture the current camera values only once
+            fromEye = [...eye];
+            fromAt = [...at];
+            fromUp = [...up];
+        }
+
+        // Interpolate 'eye' from 'fromEye' to 'targetEye' based on time
+        eye[0] = fromEye[0] + (targetEye[0] - fromEye[0]) * time;
+        eye[1] = fromEye[1] + (targetEye[1] - fromEye[1]) * time;
+        eye[2] = fromEye[2] + (targetEye[2] - fromEye[2]) * time;
+
+        // Interpolate 'at' from 'fromAt' to 'targetAt' based on time
+        at[0] = fromAt[0] + (targetAt[0] - fromAt[0]) * time;
+        at[1] = fromAt[1] + (targetAt[1] - fromAt[1]) * time;
+        at[2] = fromAt[2] + (targetAt[2] - fromAt[2]) * time;
+
+        // Interpolate 'up' from 'fromUp' to 'targetUp' based on time
+        up[0] = fromUp[0] + (targetUp[0] - fromUp[0]) * time;
+        up[1] = fromUp[1] + (targetUp[1] - fromUp[1]) * time;
+        up[2] = fromUp[2] + (targetUp[2] - fromUp[2]) * time;
+    };
+}
