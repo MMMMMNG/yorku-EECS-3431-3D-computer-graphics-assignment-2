@@ -44,54 +44,55 @@ function drawFloor() {
 function drawBase() {
     gPush(); {
         setColor(vec4(0.529, 0.784, 0.988, 1.0)) ;
-        gTranslate(20, -2, 25);
+        gTranslate(40, -1, 45);
         //texture?
-        drawScaledSphere(8,8,8);
+        drawScaledSphere(18,18,18);
 
-        gTranslate(-5,0,0);
-        drawScaledCube(5, 3, 3);
+        gTranslate(-15,0,0);
+        drawScaledCube(8, 8, 6);
     }
     gPop();    
 }
 
 function drawShip() {
     gPush();{
-        gTranslate(-16, 2, -25);
+        gTranslate(-16, 5, -25);
         // body
         gPush();{
             setColor(vec4(1.0,1.0,1.0,1.0));
             gRotate(90, 1,0,0);
-            drawScaledCylinder(8, 10, 8);
+            drawScaledCylinder(12, 16, 12);
         }
         gPop();
         // door
         gPush();{
-            gTranslate(0,0,4);
+            gTranslate(0,-3,7);
             
             gPush(); {
                 setColor(vec4(0.0,0.0,0.0,1.0));
-                drawScaledCube(1.5,1.5,1);
+                gTranslate(0,0,-0.1);
+                drawScaledCube(1.5,3,1);
             }
             gPop();
 
             setColor(vec4(1.0,1.0,1.0,1.0));
-            // ROTATE DOOR HERE
-            gRotate(-120, 1,0,0);
-            drawScaledCube(2,2,1);
+            // ROTATE DOOR HERE OR SLIDE
+            // gRotate(-120, 1,0,0);
+            drawScaledCube(2,3,1);
         }
         gPop();
         // thrusters
         gPush();{
             gRotate(-90, 1,0,0);
-            gTranslate(0,-3,-4); // y is -z
-            drawScaledCone(2,3,2);
+            gTranslate(0,-3,-6); // y is -z
+            drawScaledCone(3,4,3);
 
             gPush(); {
                 gTranslate(2,5,0);
-                drawScaledCone(2,3,2);
+                drawScaledCone(3,4,3);
     
-                gTranslate(-4,0,0);
-                drawScaledCone(2,3,2);
+                gTranslate(-5,0,0);
+                drawScaledCone(3,4,3);
             }
             gPop();
         }
@@ -99,9 +100,9 @@ function drawShip() {
         // top
         gPush();{
             setColor(vec4(1.0,0.0,0.0,1.0));
-            gTranslate(0,6,1);
+            gTranslate(0,9,1);
             gRotate(-90, 1,0,0);
-            drawScaledCone(5,5,5);
+            drawScaledCone(8,8,8);
         }
         gPop();
         
