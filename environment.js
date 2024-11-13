@@ -1,10 +1,10 @@
-function generateRandomPositions(count) {
+function getRandomPositions(rocks) {
     const positions = [];
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < rocks; i++) {
         positions.push({
-            x: getRandomNum(-12, 13),  // random value between -12 and 12
+            x: getRandomNum(-50, 51),  // random value between -50 and 50
             y: -4,  
-            z: getRandomNum(-12, 13),   // between -12 and 12
+            z: getRandomNum(-50, 51),   // between -50 and 50
             scale: getRandomNum(0.2, 1.1) // between 0.2 and 1
         });
     }

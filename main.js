@@ -54,8 +54,8 @@ var timeline = new Timeline();
 var astronaut = new Astronaut();
 var bear = new Bear();
 
-// Generate 10 random positions for rocks
-const randomPositions = generateRandomPositions(10);
+// Generate random positions for rocks
+const randomPositions = getRandomPositions(80);
 
 // ------------ Images for textures stuff --------------
 var texSize = 64;
