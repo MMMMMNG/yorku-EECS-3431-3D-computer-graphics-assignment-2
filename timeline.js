@@ -54,11 +54,12 @@ class Timeline {
         var sl = getStraightLineLookAtCamController([0,0,10], [10,10,10], [0,0,0]);
         this.from_to_do(14,20,sl);*/
 
-        var one = getFromCurrentToTargetCamController([10,10,10],[0,0,0]);
-        var two = getFromCurrentToTargetCamController([-10,10,-10],[0,4,0]);
-        var three = getFromCurrentToTargetCamController([-5,1,-5],[10,10,10]);
-        timeline.from_to_do(1,8,one);
-        timeline.from_to_do(8,16,two);
-        timeline.from_to_do(16,20,three);
+        var one = getFromCurrentToTargetCamController([1,2,3],[0,1,10]);
+        var two = getFromCurrentToTargetCamController([0,1,10],[0,0,20]);
+        var walk = astronaut.getWalkingToController([0,0,40]);
+        timeline.from_to_do(0,2,one);
+        timeline.from_to_do(2,20,two);
+        timeline.from_to_do(0,20,walk);
+        timeline.from_to_do(0, 20, astronaut.getWalkAnimController(40));
     }
 }

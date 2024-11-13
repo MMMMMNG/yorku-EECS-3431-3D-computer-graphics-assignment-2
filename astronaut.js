@@ -4,15 +4,21 @@ class Astronaut {
         this.y = 0;
         this.z = 0;
         this.currentLocation = vec3(this.x, this.y, this.z);
-        this.leftShoulderAngle = 50;
-        this.leftLegAngle = 60;
-        this.rightLegAngle = 70;
+        this.leftShoulderAngle = -45;
         this.rightShoulderAngle = 90;
+        this.rightElbowAngle = - 70;
+        this.leftElbowAngle = -70;
+        this.leftLegAngle = -60;
+        this.rightLegAngle = 60;
+        this.leftKneeAngle = 90;
+        this.rightKneeAngle = 90;
         this.doAnimInDraw = false
         this.upperArmLength = 1;
         this.foreArmLength = 1;
         this.thighLength = 1.4;
         this.calveLength = 1;
+        this.poseStride1 = {llt:-60,rlt:60,lkt:60,rkt:90,lst:-45,rst:90,le:-70,ret:-70};
+        this.poseStride2 = {llt:60,rlt:-60,lkt:90,rkt:60,lst:90,rst:-45,le:-70,ret:-70};
     }
 
     draw(TIME) {
@@ -117,7 +123,7 @@ class Astronaut {
 
         gPush(); {
             //armthis.
-            gRotate(angle * 0.5, 1, 0, 0);
+            gRotate(angle, 1, 0, 0);
             gTranslate(0, -upperHalf, 0);
             this.drawScaledSphere(0.2, upperHalf, 0.2);
 
@@ -128,7 +134,7 @@ class Astronaut {
 
                 gPush(); {
                     // forearm
-                    gRotate(angle, 1, 0, 0);
+                    gRotate(arm == "right" ? this.rightElbowAngle : this.leftElbowAngle, 1, 0, 0);
                     gTranslate(0, -foreHalf, 0);
                     this.drawScaledSphere(0.2, foreHalf, 0.2);
                     gPush(); {
@@ -175,6 +181,7 @@ class Astronaut {
             gPush(); {
                 //knee
                 this.drawScaledSphere(0.5, 0.5, 0.5);
+                gRotate(leg == "right" ? this.rightKneeAngle : this.leftKneeAngle, 1, 0, 0);
 
                 gPush(); {
                     // leg
@@ -230,5 +237,87 @@ class Astronaut {
             drawSphere();
         }
         gPop();
+    }
+
+    getWalkingToController(target) {
+        let thisAst = this;
+        let first = true;
+        let initial = [0, 0, 0];
+    
+        return function theController(time) {
+            if (first) {
+                first = false;
+                initial = [thisAst.x, thisAst.y, thisAst.z];
+            }
+    
+            // Interpolate between initial and target positions based on time
+            thisAst.x = initial[0] + (target[0] - initial[0]) * time;
+            thisAst.y = initial[1] + (target[1] - initial[1]) * time;
+            thisAst.z = initial[2] + (target[2] - initial[2]) * time;
+        };
+    }
+
+    getPoseToController({ llt, rlt, lkt, rkt, lst, rst, le, ret }) {
+        let thisAst = this;
+        let first = true;
+        let initial = { lla: 0, rla: 0, lk: 0, rk: 0, ls: 0, rs: 0, le: 0, re: 0 };
+    
+        return function theController(time) {
+            if (first) {
+                first = false;
+                // Capture the initial pose angles
+                initial = {
+                    lla: thisAst.leftLegAngle,
+                    rla: thisAst.rightLegAngle,
+                    lk: thisAst.leftKneeAngle,
+                    rk: thisAst.rightKneeAngle,
+                    ls: thisAst.leftShoulderAngle,
+                    rs: thisAst.rightShoulderAngle,
+                    le: thisAst.leftElbowAngle,
+                    re: thisAst.rightElbowAngle
+                };
+            }
+    
+            // Interpolate each angle based on time
+            thisAst.leftLegAngle = initial.lla + (llt - initial.lla) * time;
+            thisAst.rightLegAngle = initial.rla + (rlt - initial.rla) * time;
+            thisAst.leftKneeAngle = initial.lk + (lkt - initial.lk) * time;
+            thisAst.rightKneeAngle = initial.rk + (rkt - initial.rk) * time;
+            thisAst.leftShoulderAngle = initial.ls + (lst - initial.ls) * time;
+            thisAst.rightShoulderAngle = initial.rs + (rst - initial.rs) * time;
+            thisAst.leftElbowAngle = initial.le + (le - initial.le) * time;
+            thisAst.rightElbowAngle = initial.re + (ret - initial.re) * time;
+        };
+    }
+
+    getWalkAnimController(amountOfStrides) {
+        let strideCount = 0;
+        let currentPoseController = this.getPoseToController(this.poseStride1);
+        let alternatingStride = true;
+        let thisA = this;
+    
+        return function theController(time) {
+            // Normalize time within each stride
+            const strideTime = time * amountOfStrides - strideCount;
+    
+            // Call the current pose controller
+            currentPoseController(strideTime);
+    
+            // Switch strides when time progresses to the next stride interval
+            if (strideTime >= 1) {
+                strideCount++;
+                // Alternate between poseStride1 and poseStride2
+                alternatingStride = !alternatingStride;
+                currentPoseController = thisA.getPoseToController(
+                    alternatingStride ? thisA.poseStride1 : thisA.poseStride2
+                );
+            }
+    
+            // Stop after the specified amount of strides
+            if (strideCount >= amountOfStrides) {
+                // Optionally, finalize or reset to an idle pose if needed
+                return;
+            }
+        };
     }
 }
