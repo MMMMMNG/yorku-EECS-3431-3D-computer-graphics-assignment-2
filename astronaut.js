@@ -20,6 +20,7 @@ class Astronaut {
         gPush();
         {
             // Torso
+            setColor(vec4(1.0, 1.0, 1.0, 1.0));
             gTranslate(this.x, this.y, this.z);
             this.currentLocation = modelMatrix; // save this matrix for animation continuation from previous location
             //setColor(vec4(1.0,0.0,0.0,1.0)) ;
@@ -43,9 +44,31 @@ class Astronaut {
 
             }
             gPop();
+
+            // draw logo
+            gPush(); {
+                setColor(vec4(0.0, 0.0, 1.0, 1.0))
+                gTranslate(0.5, 1, 0.8);
+                this.drawScaledSphere(0.3, 0.3, 0.3);
+
+                setColor(vec4(1.0, 0.0, 0.0, 1.0));
+                gTranslate(-0.05, 0, 0.02);
+                this.drawScaledCube(0.05, 0.15, 0.28);
+
+                gTranslate(0.2, 0, 0);
+                this.drawScaledCube(0.05, 0.15, 0.28);
+
+                gTranslate(-0.1, 0, 0);
+                gRotate(45,0,0,1);
+                this.drawScaledCube(0.05, 0.15, 0.3);
+
+            }
+            gPop();
+
             // Head and Helmet
             gPush();
             {
+                setColor(vec4(1.0, 0.0, 0.0, 1.0)); // diff color?
                 gTranslate(0, 2.6, 0);
                 this.drawScaledSphere(0.8, 0.8, 0.8);
 
@@ -63,6 +86,7 @@ class Astronaut {
             }
             gPop();
 
+            setColor(vec4(1.0, 1.0, 1.0, 1.0));
             //left leg
             gTranslate(-0.8, -2, 0);
             this.drawLeg(TIME, "left");

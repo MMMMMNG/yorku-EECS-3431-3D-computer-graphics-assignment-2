@@ -49,9 +49,13 @@ var resetTimerFlag = true ;
 var animFlag = false ;
 var prevTime = 0.0 ;
 var useTextures = 1 ;
+
 var timeline = new Timeline();
 var astronaut = new Astronaut();
 var bear = new Bear();
+
+// Generate 10 random positions for rocks
+const randomPositions = generateRandomPositions(10);
 
 // ------------ Images for textures stuff --------------
 var texSize = 64;
@@ -466,8 +470,8 @@ function render() {
     gl.uniform1i(gl.getUniformLocation(program, "texture4"), 3);
     
     drawFloor();
-    //drawBase();
-    //drawShip();
+    drawBase();
+    drawShip();
 
     astronaut.draw(TIME);
 

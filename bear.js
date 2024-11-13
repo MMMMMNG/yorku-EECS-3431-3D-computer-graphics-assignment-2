@@ -17,9 +17,10 @@ class Bear {
         gPush();
         {
             // Torso
+            setColor(vec4(0.5, 0.2, 0.0, 1.0));
             gTranslate(this.x, this.y, this.z);
             this.currentLocation = modelMatrix; // save this matrix for animation continuation from previous location
-            //setColor(vec4(1.0,0.0,0.0,1.0)) ;
+            
             // ROTATE TORSO UP
             //gRotate(-90, 1, 0, 0);
             this.drawScaledSphere(1, 1, 2);
@@ -185,7 +186,7 @@ class Bear {
             gTranslate(0, 0.2, 0);
             this.drawScaledCube(0.4, 0.05, 0.05);
 
-            setColor(vec4(1.0, 0.0, 0.0, 1.0));
+            setColor(vec4(0.5, 0.2, 0.0, 1.0));
         }
         gPop();
     }
