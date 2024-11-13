@@ -44,16 +44,19 @@ function drawFloor() {
 function drawBase() {
     gPush(); {
         setColor(vec4(0.529, 0.784, 0.988, 1.0)) ;
-        gTranslate(12, -2, 12);
+        gTranslate(20, -2, 25);
         //texture?
         drawScaledSphere(8,8,8);
+
+        gTranslate(-5,0,0);
+        drawScaledCube(5, 3, 3);
     }
     gPop();    
 }
 
 function drawShip() {
     gPush();{
-        gTranslate(-4, 2, -10);
+        gTranslate(-16, 2, -25);
         // body
         gPush();{
             setColor(vec4(1.0,1.0,1.0,1.0));
