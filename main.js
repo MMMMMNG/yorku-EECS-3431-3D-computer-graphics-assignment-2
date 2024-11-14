@@ -180,6 +180,17 @@ function toggleTextures() {
     useTextures = 1 - useTextures ;
 }
 
+let oldUseTextures;
+function noTexturesHere(){
+    oldUseTextures = useTextures;
+    useTextures = 0;
+    gl.uniform1i( gl.getUniformLocation(program, "useTextures"), useTextures );
+}
+function yesTexturesHere(){
+    useTextures = oldUseTextures;
+    gl.uniform1i( gl.getUniformLocation(program, "useTextures"), useTextures );
+}
+
 function waitForTextures1(tex) {
     setTimeout( function() {
     console.log("Waiting for: "+ tex.image.src) ;
@@ -433,26 +444,29 @@ function render(fpsNow) {
         prevTime = curTime ;
     }
 
+    noTexturesHere();
+    drawBase();
+    drawShip();
+
+    astronaut.draw(TIME);
+
+    bear.draw(TIME);
+    yesTexturesHere();
+
     // dirt texture
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, textureArray[0].textureWebGL);
     gl.uniform1i(gl.getUniformLocation(program, "texture1"), 0);
-    
-    drawFloor();
 
+    drawFloor();
     // space texture
     gl.activeTexture(gl.TEXTURE1);
     gl.bindTexture(gl.TEXTURE_2D, textureArray[1].textureWebGL);
     gl.uniform1i(gl.getUniformLocation(program, "texture2"), 1);
 
-    drawBase();
-    drawShip(TIME);
-
-    astronaut.draw(TIME);
-
-    bear.draw(TIME);
-
     renderSkybox(gl, eye, at, up);
+
+
     
     if( animFlag )
         timeline.doAnims(TIME);
