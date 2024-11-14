@@ -465,8 +465,6 @@ function render(fpsNow) {
     gl.uniform1i(gl.getUniformLocation(program, "texture2"), 1);
 
     renderSkybox(gl, eye, at, up);
-
-
     
     if( animFlag )
         timeline.doAnims(TIME);
