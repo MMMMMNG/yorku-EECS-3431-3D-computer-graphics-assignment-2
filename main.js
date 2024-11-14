@@ -458,11 +458,12 @@ function render(fpsNow) {
     gl.bindTexture(gl.TEXTURE_2D, textureArray[0].textureWebGL);
     gl.uniform1i(gl.getUniformLocation(program, "texture1"), 0);
 
-    drawFloor();
     // space texture
     gl.activeTexture(gl.TEXTURE1);
     gl.bindTexture(gl.TEXTURE_2D, textureArray[1].textureWebGL);
     gl.uniform1i(gl.getUniformLocation(program, "texture2"), 1);
+
+    drawFloor();
 
     renderSkybox(gl, eye, at, up);
     

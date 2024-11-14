@@ -43,7 +43,7 @@ function drawFloor() {
 
 function drawBase() {
     gPush(); {
-        setColor(vec4(0.529, 0.784, 0.988, 1.0)) ;
+        setColor(vec4(1.0, 0.945, 0.851, 1.0)) ;
         gTranslate(40, -1, 45);
         //texture?
         drawScaledSphere(18,18,18);
