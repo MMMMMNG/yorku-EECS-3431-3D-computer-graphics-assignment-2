@@ -54,7 +54,7 @@ function drawBase() {
     gPop();    
 }
 
-function drawShip() {
+function drawShip(TIME) {
     gPush();{
         gTranslate(-16, 5, -25);
         // body
