@@ -138,8 +138,6 @@ function initTextures() {
     textureArray.push({}) ;
     loadImageTexture(textureArray[textureArray.length-1],image2) ;
 
-    textureArray.push({}) ;
-    loadFileTexture(textureArray[textureArray.length-1],"Textures/cubemaps_skybox-1474704952.png");
 }
 
 

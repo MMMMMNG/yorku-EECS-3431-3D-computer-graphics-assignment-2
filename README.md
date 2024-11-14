@@ -9,10 +9,10 @@ Email: mmmm@my.yorku.ca Student ID: 221828934
 
 Our animation follows the short story of an astronaut in a galaxy far, far away. As they're mining for space rocks, they encounter an unexpected visitor - a space bear!
 
-We were able to implement multiple two(+)-level heirarchical objects, mapped textures, a 360 fly around and additional camera movements, and animations connected to real time. Our programs frame rate is displayed in the console window.
+We were able to implement multiple two(+)-level heirarchical objects, mapped textures, a 360 fly around and additional camera movements, and animations connected to real time. Our programs frame rate is displayed in the console window. We implemented classes for the bear and astronaut objects, as well as for camera functionality and animation. We also implemented a skybox.
 
-Additional Sources for Learning:
-Screen space reflections and refraction.
+---------- Learning Resources ----------------
+Screen space reflections and refraction:
 https://lettier.github.io/3d-game-shaders-for-beginners/screen-space-reflection.html
 
 https://lettier.github.io/3d-game-shaders-for-beginners/screen-space-refraction.html
@@ -20,10 +20,7 @@ https://lettier.github.io/3d-game-shaders-for-beginners/screen-space-refraction.
 Cubemap:
 https://webglfundamentals.org/webgl/lessons/webgl-skybox.html
 
-Texture Citations:
+-------------- Texture Citations ------------------
+"Deserted terrestial planet in orange colors" by Ruletkka. 2015, May 3, https://depositphotos.com/photos/mars.html?qview=71865897.
 
 "Seamless dirt texture" by hhh316. 2010, May 09, https://www.deviantart.com/hhh316/art/Seamless-dirt-texture-163426021.
-
-<!-- We didn't use this I think? "Galaxy wallpaper in warm colors." Designed by Freepik, https://www.freepik.com/free-ai-image/galaxy-wallpaper-warm-colors_280118555.htm#fromView=search&page=3&position=39&uuid=d0c3b73e-551b-48ff-9b6b-134a2f154eec . -->
-
-"Deserted terrestial planet in orange colors" by Ruletkka. 2015, May 3, https://depositphotos.com/photos/mars.html?qview=71865897.
