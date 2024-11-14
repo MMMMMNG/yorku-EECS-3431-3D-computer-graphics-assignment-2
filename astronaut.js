@@ -21,7 +21,8 @@ class Astronaut {
         this.poseStride1 = {llt:-60,rlt:60,lkt:60,rkt:90,lst:-45,rst:90,le:-70,ret:-70};
         this.poseStride2 = {llt:60,rlt:-60,lkt:90,rkt:60,lst:90,rst:-45,le:-70,ret:-70};
         this.poseCrouch = {lst: 0, rst: 0, ret: -30, le: -20, llt: -100, rlt: 0, lkt: 70, rkt: 90};
-        this.poseRightArmUp = {lst: -100, rst: 0, ret: -30, le: -20, llt: -100, rlt: 0, lkt: 70, rkt: 90};
+        this.poseRightArmUp = {lst: -200, rst: 0, ret: -30, le: -20, llt: -100, rlt: 0, lkt: 70, rkt: 90};
+        this.hasPickAxe = false;
 
     }
 
@@ -149,6 +150,9 @@ class Astronaut {
                         // hand
                         gTranslate(0, -foreHalf, 0);
                         this.drawScaledSphere(0.3, 0.3, 0.3);
+                        if(this.hasPickAxe && arm === "left"){
+                            this.drawPickaxe();
+                        }
                     }
                     gPop();
                 }
@@ -157,6 +161,31 @@ class Astronaut {
             gPop();
         }
         gPop();
+
+    }
+
+    drawPickaxe(){
+        gPush();
+        {
+            
+            setColor(vec4(160/255,82/255,45/255,1));
+            gPush();
+            {
+                gTranslate(0,0,1.5);
+                gScale(0.25,0.25,3);
+                drawCylinder();
+
+            }
+            gPop();
+            
+            setColor(vec4(0.45,0.45,0.45,1));
+            gTranslate(0,0,3);
+            gScale(0.2,1.2,0.2);
+            drawCube();
+
+        }
+        gPop();
+        setColor(vec4(1,1,1,1));
 
     }
 

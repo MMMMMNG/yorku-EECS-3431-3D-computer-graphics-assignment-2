@@ -56,16 +56,15 @@ class Timeline {
 
         var one = getFromCurrentToTargetCamController([10,1,3],[0,1,10]);
         var two = getFromCurrentToTargetCamController([0,1,15],[0,0,20]);
-        var walkOut = astronaut.getWalkingToController([-16,0.25,-10]);
-        var walkToRock = astronaut.getWalkingToController([-10, 0.25, 10]);
-        //timeline.from_to_do(0,2,one);
-        //timeline.from_to_do(2,20,two);
+
         timeline.from_to_do(0,1,getSpaceShipDoorAngleController(120));
-        timeline.from_to_do(0,3,walkOut);
-        timeline.from_to_do(3,5,walkToRock);
+        timeline.from_to_do(0,3,astronaut.getWalkingToController([-16,0.25,-10]));
+        timeline.from_to_do(3,5,astronaut.getWalkingToController([-10, 0.25, 10]));
         timeline.from_to_do(0, 5, astronaut.getWalkAnimController(10));
         timeline.from_to_do(5,6, astronaut.getPoseToController(astronaut.poseCrouch));
         timeline.from_to_do(5,6, astronaut.getWalkingToController([-10, -0.5, 10]))
         timeline.from_to_do(5,6, astronaut.getRotToController([30,0,0]));
+        timeline.do_once_at(6,() => astronaut.hasPickAxe = true);
+        timeline.from_to_do(6,20, astronaut.getMiningController(100));
     }
 }
