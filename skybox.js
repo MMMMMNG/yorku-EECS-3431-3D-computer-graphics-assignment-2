@@ -140,18 +140,9 @@ var offset = 0;        // start at the beginning of the buffer
 gl.vertexAttribPointer(
     positionLocation, size, type, normalize, stride, offset);
 
-// Compute the projection matrix
-var aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-var projectionMatrix =
-    m4.perspective(60 * Math.PI / 180, aspect, near, far);
-
-// camera going in circle 2 units from origin looking at origin
-
-// Compute the camera's matrix using look at.
-var cameraMatrix = m4.lookAt(cameraPosition, target, up);
-
 // Make a view matrix from the camera matrix.
-var viewMatrix = m4.inverse(cameraMatrix);
+//var viewMatrix = m4.inverse(window.viewMatrix.flat());
+var viewMatrix = m4.inverse(window.viewMatrix.flat());
 
 // We only care about direciton so remove the translation
 viewMatrix[12] = 0;
@@ -159,7 +150,7 @@ viewMatrix[13] = 0;
 viewMatrix[14] = 0;
 
 var viewDirectionProjectionMatrix =
-    m4.multiply(projectionMatrix, viewMatrix);
+    m4.multiply(window.projectionMatrix.flat(), viewMatrix);
 var viewDirectionProjectionInverseMatrix =
     m4.inverse(viewDirectionProjectionMatrix);
 
