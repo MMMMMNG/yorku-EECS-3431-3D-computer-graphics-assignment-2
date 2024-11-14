@@ -53,7 +53,7 @@ function drawBase() {
     }
     gPop();    
 }
-
+let spaceShipDoorRotationAngle = 0;
 function drawShip(TIME) {
     gPush();{
         gTranslate(-16, 5, -25);
@@ -70,15 +70,17 @@ function drawShip(TIME) {
             
             gPush(); {
                 setColor(vec4(0.0,0.0,0.0,1.0));
-                gTranslate(0,0,-0.1);
-                drawScaledCube(1.5,3,1);
+                gTranslate(0,2,-0.1);
+                drawScaledCube(1.5,3.5,0.99);
             }
             gPop();
 
             setColor(vec4(1.0,1.0,1.0,1.0));
             // ROTATE DOOR HERE OR SLIDE
-            // gRotate(-120, 1,0,0);
-            drawScaledCube(2,3,1);
+            gTranslate(0,-3,0.5);
+            gRotate(spaceShipDoorRotationAngle, 1,0,0);
+            gTranslate(0,4.5,0);
+            drawScaledCube(2,4.5,0.4);
         }
         gPop();
         // thrusters
@@ -108,6 +110,18 @@ function drawShip(TIME) {
         
     }
     gPop();
+}
+
+function getSpaceShipDoorAngleController(toAngle){
+    let first = true;
+    let initAngle = 0;
+    return function contr(time){
+        if(first){
+            first = false;
+            initAngle = spaceShipDoorRotationAngle;
+        }
+        spaceShipDoorRotationAngle = initAngle * (1-time) + toAngle * time;
+    }
 }
 
 function getRandomNum(min, max) { // min inclusive, max exclusive

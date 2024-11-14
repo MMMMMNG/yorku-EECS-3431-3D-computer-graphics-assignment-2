@@ -56,10 +56,13 @@ class Timeline {
 
         var one = getFromCurrentToTargetCamController([10,1,3],[0,1,10]);
         var two = getFromCurrentToTargetCamController([0,1,15],[0,0,20]);
-        var walk = astronaut.getWalkingToController([0,0,40]);
-        timeline.from_to_do(0,2,one);
-        timeline.from_to_do(2,20,two);
-        timeline.from_to_do(0,20,walk);
+        var walkOut = astronaut.getWalkingToController([-16,0.25,-10]);
+        var walkToRock = astronaut.getWalkingToController([-10, 0.25, 12]);
+        //timeline.from_to_do(0,2,one);
+        //timeline.from_to_do(2,20,two);
+        timeline.from_to_do(0,3,walkOut);
+        timeline.from_to_do(3,5,walkToRock);
+        timeline.from_to_do(0,1,getSpaceShipDoorAngleController(120));
         timeline.from_to_do(0, 20, astronaut.getWalkAnimController(40));
     }
 }

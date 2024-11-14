@@ -1,8 +1,8 @@
 class Astronaut {
     constructor() {
-        this.x = 2;
-        this.y = 0;
-        this.z = 0;
+        this.x = -16;
+        this.y = 6;
+        this.z = -25;
         this.currentLocation = vec3(this.x, this.y, this.z);
         this.leftShoulderAngle = -45;
         this.rightShoulderAngle = 90;
