@@ -54,8 +54,8 @@ class Timeline {
         var sl = getStraightLineLookAtCamController([0,0,10], [10,10,10], [0,0,0]);
         this.from_to_do(14,20,sl);*/
 
-        var one = getFromCurrentToTargetCamController([1,2,3],[0,1,10]);
-        var two = getFromCurrentToTargetCamController([0,1,10],[0,0,20]);
+        var one = getFromCurrentToTargetCamController([10,1,3],[0,1,10]);
+        var two = getFromCurrentToTargetCamController([0,1,15],[0,0,20]);
         var walk = astronaut.getWalkingToController([0,0,40]);
         timeline.from_to_do(0,2,one);
         timeline.from_to_do(2,20,two);
