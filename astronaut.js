@@ -3,14 +3,15 @@ class Astronaut {
         this.x = -16;
         this.y = 6;
         this.z = -25;
+        this.rot = [0,0,0];
         this.currentLocation = vec3(this.x, this.y, this.z);
-        this.leftShoulderAngle = -45;
-        this.rightShoulderAngle = 90;
-        this.rightElbowAngle = - 70;
-        this.leftElbowAngle = -70;
-        this.leftLegAngle = -60;
-        this.rightLegAngle = 60;
-        this.leftKneeAngle = 90;
+        this.leftShoulderAngle = 0;
+        this.rightShoulderAngle = 0;
+        this.rightElbowAngle = -30;
+        this.leftElbowAngle = -20;
+        this.leftLegAngle = -100;
+        this.rightLegAngle = 0;
+        this.leftKneeAngle = 70;
         this.rightKneeAngle = 90;
         this.doAnimInDraw = false
         this.upperArmLength = 1;
@@ -19,15 +20,22 @@ class Astronaut {
         this.calveLength = 1;
         this.poseStride1 = {llt:-60,rlt:60,lkt:60,rkt:90,lst:-45,rst:90,le:-70,ret:-70};
         this.poseStride2 = {llt:60,rlt:-60,lkt:90,rkt:60,lst:90,rst:-45,le:-70,ret:-70};
+        this.poseCrouch = {lst: 0, rst: 0, ret: -30, le: -20, llt: -100, rlt: 0, lkt: 70, rkt: 90};
+        this.poseRightArmUp = {lst: -100, rst: 0, ret: -30, le: -20, llt: -100, rlt: 0, lkt: 70, rkt: 90};
+
     }
 
     draw(TIME) {
 
         gPush();
         {
-            // Torso
             setColor(vec4(1.0, 1.0, 1.0, 1.0));
             gTranslate(this.x, this.y, this.z);
+            //rotate body
+            gRotate(this.rot[1], 0, 1, 0);
+            gRotate(this.rot[0], 1, 0, 0);
+            gRotate(this.rot[2], 0, 0, 1);
+            // Torso
             this.currentLocation = modelMatrix; // save this matrix for animation continuation from previous location
             //setColor(vec4(1.0,0.0,0.0,1.0)) ;
             this.drawScaledSphere(1.5, 2, 1.2);
@@ -289,16 +297,41 @@ class Astronaut {
             thisAst.rightElbowAngle = initial.re + (ret - initial.re) * time;
         };
     }
+    getRotToController([x,y,z]) {
+        let thisAst = this;
+        let first = true;
+        let initial = [0,0,0];
+    
+        return function theController(time) {
+            if (first) {
+                first = false;
+                initial = [...thisAst.rot];
+            }
+    
+            // Interpolate each angle based on time
+            thisAst.rot[0] = x * time + initial[0] * (1-time);
+            thisAst.rot[1] = y * time + initial[1] * (1-time);
+            thisAst.rot[2] = z * time + initial[2] * (1-time);
+        };
+    }
 
     getWalkAnimController(amountOfStrides) {
+        return this.getOscillatingPoseController(amountOfStrides, this.poseStride1, this.poseStride2);
+    }
+
+    getMiningController(hits){
+        return this.getOscillatingPoseController(hits, this.poseCrouch, this.poseRightArmUp);
+    }
+
+    getOscillatingPoseController(oscillationAmount, poseA, poseB){
         let strideCount = 0;
-        let currentPoseController = this.getPoseToController(this.poseStride1);
+        let currentPoseController = this.getPoseToController(poseA);
         let alternatingStride = true;
         let thisA = this;
     
         return function theController(time) {
             // Normalize time within each stride
-            const strideTime = time * amountOfStrides - strideCount;
+            const strideTime = time * oscillationAmount - strideCount;
     
             // Call the current pose controller
             currentPoseController(strideTime);
@@ -309,12 +342,12 @@ class Astronaut {
                 // Alternate between poseStride1 and poseStride2
                 alternatingStride = !alternatingStride;
                 currentPoseController = thisA.getPoseToController(
-                    alternatingStride ? thisA.poseStride1 : thisA.poseStride2
+                    alternatingStride ? poseA : poseB
                 );
             }
     
             // Stop after the specified amount of strides
-            if (strideCount >= amountOfStrides) {
+            if (strideCount >= oscillationAmount) {
                 // Optionally, finalize or reset to an idle pose if needed
                 return;
             }
