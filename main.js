@@ -194,7 +194,6 @@ function waitForTextures1(tex) {
     else
     {
         console.log("ready to render") ;
-        window.requestAnimFrame(render);
     }
                },5) ;
     
@@ -269,15 +268,12 @@ window.onload = function init() {
     // set the callbacks for the UI elements
     document.getElementById("sliderXi").oninput = function() {
         RX = this.value ;
-        window.requestAnimFrame(render);
     };
     document.getElementById("sliderYi").oninput = function() {
         RY = this.value;
-        window.requestAnimFrame(render);
     };
     document.getElementById("sliderZi").oninput = function() {
         RZ =  this.value;
-        window.requestAnimFrame(render);
     };
     
     document.getElementById("animToggleButton").onclick = function() {
@@ -287,21 +283,18 @@ window.onload = function init() {
         else {
             animFlag = true  ;
             resetTimerFlag = true ;
-            window.requestAnimFrame(render);
         }
     };
     
     document.getElementById("textureToggleButton").onclick = function() {
         toggleTextures() ;
-        window.requestAnimFrame(render);
     };
 
     var controller = new CameraController(canvas);
     controller.onchange = function(xRot,yRot) {
         RX = xRot ;
         RY = yRot ;
-        window.requestAnimFrame(render); };
-    
+    };
     // load and initialize the textures
     initTextures() ;
     
@@ -382,25 +375,23 @@ function gPop() {
 function gPush() {
     MS.push(modelMatrix) ;
 }
-let lastFPStime = performance.now();
+let lastFPStime = 0;
 let frameCount = 0;
-let fps = 0;
 
-function render() {
-    const currentFPStime = performance.now();
+function render(fpsNow) {
     frameCount++;
 
     // Calculate elapsed time
-    const elapsed = currentFPStime - lastFPStime;
+    const elapsed = fpsNow - lastFPStime;
 
     // Update FPS every 2 seconds (2000 ms)
     if (elapsed >= 2000) {
-        fps = frameCount / (elapsed / 1000); // Calculate FPS
+        const fps = frameCount / (elapsed / 1000); // Calculate FPS
         console.log(`FPS: ${fps.toFixed(2)}`);
 
         // Reset counters
         frameCount = 0;
-        lastFPStime = currentFPStime;
+        lastFPStime = fpsNow;
     }
 
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
