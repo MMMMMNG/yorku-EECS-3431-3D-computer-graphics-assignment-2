@@ -89,7 +89,6 @@ class Astronaut {
 
                 // apply transparent texture to helmet?
                 this.transparentMatrixLoc = modelMatrix;
-                // getDistanceFromCamera(this.transparentMatrixLoc);
 
                 setColor(vec4(1.0, 1.0, 1.0, 0.2));
                 // Enable alpha blending and set the percentage blending factors

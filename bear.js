@@ -62,10 +62,26 @@ class Bear {
             {
                 // neck
                 gTranslate(0, 0.5, 2.3);
-
                 this.drawScaledSphere(0.7, 0.7, 0.7);
-                // head
+
+                // helmet
                 gTranslate(0, 0.3, 0.8);
+
+                setColor(vec4(1.0, 1.0, 1.0, 0.2));
+                // Enable alpha blending and set the percentage blending factors
+                gl.enable(gl.BLEND);
+                gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+                // Turn off updating of the z-buffer
+                gl.depthMask(false);
+                
+                drawScaledSphere(1.2, 1.2, 1.2);
+
+                gl.disable(gl.BLEND);
+                gl.depthMask(true);
+
+                // head
+                setColor(vec4(0.5, 0.2, 0.0, 1.0));
                 this.drawScaledSphere(0.7, 0.7, 0.7);
 
                 // right eye
