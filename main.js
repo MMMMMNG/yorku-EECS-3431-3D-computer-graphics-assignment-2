@@ -236,6 +236,7 @@ function waitForTextures(texs) {
                },5) ;
     
 }
+
 let skyboxProgramInfo;
 
 window.onload = function init() {

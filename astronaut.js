@@ -23,6 +23,7 @@ class Astronaut {
         this.poseCrouch = {lst: 0, rst: 0, ret: -30, le: -20, llt: -100, rlt: 0, lkt: 70, rkt: 90};
         this.poseRightArmUp = {lst: -200, rst: 0, ret: -30, le: -20, llt: -100, rlt: 0, lkt: 70, rkt: 90};
         this.hasPickAxe = false;
+        this.transparentMatrixLoc = vec3(this.x, this.y, this.z);
 
     }
 
@@ -88,8 +89,21 @@ class Astronaut {
                 this.drawScaledSphere(0.8, 0.8, 0.8);
 
                 // apply transparent texture to helmet?
-                //setColor(vec4(1.0, 1.0, 1.0, 0.2));
-                //drawScaledSphere(1.0, 1.0, 1.0);
+                this.transparentMatrixLoc = modelMatrix;
+                // getDistanceFromCamera(this.transparentMatrixLoc);
+
+                setColor(vec4(1.0, 1.0, 1.0, 0.2));
+                // Enable alpha blending and set the percentage blending factors
+                gl.enable(gl.BLEND);
+                gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+                // Turn off updating of the z-buffer
+                gl.depthMask(false);
+                
+                drawScaledSphere(1.2, 1.2, 1.2);
+
+                gl.disable(gl.BLEND);
+                gl.depthMask(true);
 
                 // right eye
                 gTranslate(0.3, 0, 0.65);
