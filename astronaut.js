@@ -84,9 +84,8 @@ class Astronaut {
             // Head and Helmet
             gPush();
             {
-                setColor(vec4(1.0, 0.0, 0.0, 1.0)); // diff color?
+                
                 gTranslate(0, 2.6, 0);
-                this.drawScaledSphere(0.8, 0.8, 0.8);
 
                 // apply transparent texture to helmet?
                 this.transparentMatrixLoc = modelMatrix;
@@ -104,6 +103,9 @@ class Astronaut {
 
                 gl.disable(gl.BLEND);
                 gl.depthMask(true);
+
+                setColor(vec4(1.0, 0.0, 0.0, 1.0)); // diff color?
+                this.drawScaledSphere(0.8, 0.8, 0.8);
 
                 // right eye
                 gTranslate(0.3, 0, 0.65);
