@@ -11,7 +11,7 @@ Our animation follows the short story of an astronaut in a galaxy far, far away.
 
 We were able to implement multiple two(+)-level heirarchical objects (an astronaut, a spaceship, a base, and a bear), two mapped textures, a 360
 fly around and additional camera movements, and animations connected to real time. Our programs frame rate is displayed in the console window 
-every 2 seconds. We implemented classes for the bear and astronaut objects, and closures for the camera functionality and animation. We also implemented a skybox and attempted to implement a transparent shader effect. The transparency half works though becuase it doesn't always take into account the z-buffer when multiple transparent objects overlap; this results in the shader not knowing which transparent object is in front of the other.
+every 2 seconds. We implemented classes for the bear and astronaut objects, and closures for the camera functionality and animation. We also implemented a skybox (but It stopped working and we didn't have time to fix it) and attempted to implement a transparent shader effect. The transparency half works though becuase it doesn't always take into account the z-buffer when multiple transparent objects overlap; this results in the shader not knowing which transparent object is in front of the other.
 This would be something we aim to fix in the future of this project.
 
 ---------- Learning Resources ----------------
