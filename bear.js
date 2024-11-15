@@ -343,13 +343,14 @@ class Bear {
         };
     }
 
-    getMoveCircularController(centerOfRotToRight) {
+    getMoveCircularController(centerOfRotToRight, howMuchToComplete = 1.0) {
         let thisBear = this;
         let first = true;
         let center = { x: 0, z: 0 };
         let startAngle = 0;
         let initialPosition = { x: 0, z: 0 };
         let initialHeading = 0;
+        const radius = Math.abs(centerOfRotToRight);
     
         return function theController(time) {
             if (first) {
@@ -370,14 +371,17 @@ class Bear {
             }
     
             // Calculate the current angle along the arc based on time
-            const currentAngle = startAngle + (time * Math.PI * 2); // assuming full rotation over time 1
+            const currentAngle = startAngle + (time * howMuchToComplete * Math.PI * 2); // assuming full rotation over time 1
     
             // Calculate the new position along the arc
-            thisBear.x = center.x + centerOfRotToRight * Math.cos(currentAngle);
-            thisBear.z = center.z + centerOfRotToRight * Math.sin(currentAngle);
+            thisBear.x = center.x + radius * Math.cos(currentAngle);
+            thisBear.z = center.z + Math.sign(centerOfRotToRight)  * radius * Math.sin(currentAngle);
     
             // Update the heading to stay tangent to the circle
-            thisBear.rot[1] = -(currentAngle * 180) / Math.PI; // convert to degrees and adjust to tangent
+            thisBear.rot[1] = (-currentAngle * 180) / Math.PI; // convert to degrees and adjust to tangent
+            if(centerOfRotToRight < 0){
+                thisBear.rot[1] = -thisBear.rot[1] + 180;
+            }
         };
     }
 
