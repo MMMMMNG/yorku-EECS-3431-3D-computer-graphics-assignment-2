@@ -20,6 +20,9 @@ https://lettier.github.io/3d-game-shaders-for-beginners/screen-space-refraction.
 Cubemap:
 https://webglfundamentals.org/webgl/lessons/webgl-skybox.html
 
+Transparency and Alpha Blending:
+https://learnwebgl.brown37.net/11_advanced_rendering/alpha_blending.html 
+
 -------------- Texture Citations ------------------
 "Deserted terrestial planet in orange colors" by Ruletkka. 2015, May 3, https://depositphotos.com/photos/mars.html?qview=71865897.
 

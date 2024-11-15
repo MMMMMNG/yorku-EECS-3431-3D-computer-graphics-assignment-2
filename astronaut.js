@@ -38,7 +38,7 @@ class Astronaut {
             gRotate(this.rot[2], 0, 0, 1);
             // Torso
             this.currentLocation = modelMatrix; // save this matrix for animation continuation from previous location
-            //setColor(vec4(1.0,0.0,0.0,1.0)) ;
+            
             this.drawScaledSphere(1.5, 2, 1.2);
 
             // draw air tank
@@ -49,11 +49,11 @@ class Astronaut {
             gPop();
 
             gPush(); {
-                // Right
+                // Right arm
                 gTranslate(1.5, 0.8, 0);
                 this.drawArm(TIME, "right");
 
-                //Left
+                //Left arm
                 gTranslate(-3, 0, 0);
                 this.drawArm(TIME, "left");
 
@@ -88,6 +88,7 @@ class Astronaut {
                 this.drawScaledSphere(0.8, 0.8, 0.8);
 
                 // apply transparent texture to helmet?
+                //setColor(vec4(1.0, 1.0, 1.0, 0.2));
                 //drawScaledSphere(1.0, 1.0, 1.0);
 
                 // right eye

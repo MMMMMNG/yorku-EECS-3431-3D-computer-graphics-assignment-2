@@ -28,6 +28,9 @@ var materialDiffuse = vec4( 1.0, 0.8, 0.0, 1.0 );
 var materialSpecular = vec4( 0.4, 0.4, 0.4, 1.0 );
 var materialShininess = 30.0;
 
+var currColor;
+var percentOfReflection; // alpha value
+var percentLeftOver; // percentage of light passing through
 
 var ambientColor, diffuseColor, specularColor;
 
@@ -43,7 +46,6 @@ var RY = 0 ;
 var RZ = 0 ;
 
 var MS = [] ; // The modeling matrix stack
-var TIME = 0.0 ; // Realtime
 var TIME = 0.0 ; // Realtime
 var resetTimerFlag = true ;
 var animFlag = false ;
@@ -81,7 +83,6 @@ image2[4*texSize*i+4*j+k] = 255*image1[i][j][k];
 
 
 var textureArray = [] ;
-
 
 
 function isLoaded(im) {
@@ -174,6 +175,10 @@ function setColor(c)
                                          "lightPosition"),flatten(lightPosition) );
     gl.uniform1f( gl.getUniformLocation(program, 
                                         "shininess"),materialShininess );
+
+    currColor = c;
+    percentOfReflection = c[3]; // alpha
+    percentLeftOver = 1.0 - percentOfReflection;
 }
 
 function toggleTextures() {
@@ -402,7 +407,7 @@ function render(fpsNow) {
         frameCount = 0;
         lastFPStime = fpsNow;
     }
-
+    
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.useProgram( program );
     
