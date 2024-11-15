@@ -37,7 +37,7 @@ var ambientColor, diffuseColor, specularColor;
 var modelMatrix, viewMatrix ;
 var modelViewMatrix, projectionMatrix, normalMatrix;
 var modelViewMatrixLoc, projectionMatrixLoc, normalMatrixLoc;
-var eye = vec3(0,0,10);
+var eye = vec3(0,100,10);
 var at = vec3(0.0, 0.0, 0.0);
 var up = vec3(0.0, 1.0, 0.0);
 
