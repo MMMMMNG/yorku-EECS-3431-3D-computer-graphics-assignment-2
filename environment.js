@@ -62,11 +62,6 @@ function drawBase() {
             gScale(30, 30, 20);
             drawCone();
 
-            setColor(vec4(0.0, 0.102, 0.6, 1.0))
-            gRotate(-180, 1, 0, 0);
-            gScale(10, 10, 15);
-            drawCone();
-
         }
         gPop();
 
