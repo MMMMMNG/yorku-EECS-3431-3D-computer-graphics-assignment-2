@@ -57,14 +57,9 @@ function drawBase() {
             gTranslate(0, 10, 12);
             drawScaledCube(1, 20, 1);
 
-            gTranslate(0, 25, 0);
-            gRotate(90, 1, 0, 0);
+            gTranslate(0, 25, -2);
+            gRotate(75, 1, 0, 0);
             gScale(30,30,20);
-            drawCone();
-
-            setColor(vec4(0.0, 0.102, 0.6, 1.0))
-            gRotate(-180, 1, 0, 0);
-            gScale(10,10,15);
             drawCone();
 
         }
