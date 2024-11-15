@@ -435,8 +435,9 @@ class Astronaut {
             // Update the heading to stay tangent to the circle
             thisBear.rot[1] = (-currentAngle * 180) / Math.PI; // convert to degrees and adjust to tangent
             if(centerOfRotToRight < 0){
-                thisBear.rot[1] = -thisBear.rot[1] + 180;
+                thisBear.rot[1] = (-thisBear.rot[1] + 180);
             }
+            thisBear.rot[1] = ((thisBear.rot[1] + 180) % 360 + 360) % 360 - 180;
         };
     }
 }

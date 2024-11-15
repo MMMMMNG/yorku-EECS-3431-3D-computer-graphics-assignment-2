@@ -7,7 +7,7 @@ class Bear {
         this.poseAngles = {fl:10,fr:30,bl:70,br:90,lip:120};
         this.poseStride1 = {fl:-45,fr:45,bl:45,br:-45,lip:0};
         this.poseStride2 = {fl:45,fr:-45,bl:-45,br:45,lip:0};
-        this.rot = [0,45,0];
+        this.rot = [0,0,0];
 
     }
 
