@@ -78,7 +78,7 @@ class Timeline {
         timeline.from_to_do(20,23, astronaut.getMoveCircularController(-32));
         timeline.from_to_do(23,24, astronaut.getMoveCircularController(-32,0.75));
         timeline.from_to_do(24,25, astronaut.getWalkingToController([20, 0.25, 13]));
-        timeline.from_to_do(25,26, astronaut.getMoveCircularController(-16,0.5));
+        timeline.from_to_do(25,26, astronaut.getMoveCircularController(16,0.5));
         timeline.do_once_at(10,() => astronaut.hasPickAxe = false);
 
         timeline.from_to_do(0,20, bear.getOscillatingPoseController(50, bear.poseStride1, bear.poseStride2));
