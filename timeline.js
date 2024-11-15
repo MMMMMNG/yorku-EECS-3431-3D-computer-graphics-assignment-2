@@ -65,6 +65,13 @@ class Timeline {
         timeline.from_to_do(5,6, astronaut.getWalkingToController([-10, -0.5, 10]))
         timeline.from_to_do(5,6, astronaut.getRotToController([30,0,0]));
         timeline.do_once_at(6,() => astronaut.hasPickAxe = true);
-        timeline.from_to_do(6,20, astronaut.getMiningController(100));
+        timeline.from_to_do(6,10, astronaut.getMiningController(16));
+        timeline.from_to_do(10,11, astronaut.getRotToController([0,0,0]));
+        timeline.from_to_do(10,20, astronaut.getMoveCircularController(20));
+        timeline.do_once_at(10,() => astronaut.hasPickAxe = false);
+        timeline.from_to_do(10, 20, astronaut.getWalkAnimController(20));
+
+        timeline.from_to_do(0,20, bear.getOscillatingPoseController(50, bear.poseStride1, bear.poseStride2));
+        timeline.from_to_do(0,20, bear.getMoveCircularController(40));
     }
 }

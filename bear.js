@@ -1,14 +1,13 @@
 class Bear {
     constructor(){
         this.x = -2;
-        this.y = -2;
+        this.y = 4;
         this.z = 0;
         this.currentLocation = vec3(this.x,this.y,this.z);
-        this.leftShoulderAngle = 1;
-        this.leftLegAngle = 2;
-        this.rightLegAngle = 3;
-        this.rightShoulderAngle = 4;
-        this.doAnimInDraw = false
+        this.poseAngles = {fl:10,fr:30,bl:70,br:90,lip:120};
+        this.poseStride1 = {fl:-45,fr:45,bl:45,br:-45,lip:0};
+        this.poseStride2 = {fl:45,fr:-45,bl:-45,br:45,lip:0};
+        this.rot = [0,45,0];
 
     }
 
@@ -19,6 +18,11 @@ class Bear {
             // Torso
             setColor(vec4(0.5, 0.2, 0.0, 1.0));
             gTranslate(this.x, this.y, this.z);
+            //rotate body
+            gRotate(this.rot[1], 0, 1, 0);
+            gRotate(this.rot[0], 1, 0, 0);
+            gRotate(this.rot[2], 0, 0, 1);
+            gScale(3,3,3);
             this.currentLocation = modelMatrix; // save this matrix for animation continuation from previous location
             
             // ROTATE TORSO UP
@@ -37,19 +41,19 @@ class Bear {
             gPush(); {
                 // right arm
                 gTranslate(1, -0.5, 2);
-                this.drawAppendage(TIME, "right");
+                this.drawAppendage("fr");
 
                 // right leg
                 gTranslate(0, 0, -3);
-                this.drawAppendage(TIME + 1.5, "right");
+                this.drawAppendage("br");
 
                 //left leg
                 gTranslate(-1.8, 0, 0);
-                this.drawAppendage(TIME, "left");
+                this.drawAppendage("bl");
 
                 // left arm
                 gTranslate(0, 0, 3);
-                this.drawAppendage(TIME, "left");
+                this.drawAppendage("fl");
             }
             gPop();
 
@@ -94,20 +98,13 @@ class Bear {
         gPop();
     }
 
-    drawAppendage(TIME, leg) {
-        const amplitude = 30;
-        const freq = 1;
-        var angle;
-        if (leg == "right") {
-            angle = this.doAnimInDraw ? (-1) * Math.sin(TIME * freq) * amplitude : this.rightLegAngle;
-        } else {
-            angle = this.doAnimInDraw ? Math.sin(TIME * freq) * amplitude : this.leftLegAngle;
-        }
+    drawAppendage(which) {
 
         gPush(); {
             // hip
             // ROTATE HERE FOR ALL LEGS
-            //gRotate(20, 1, 0, 0);
+            const a = this.poseAngles[which];
+            gRotate(a, 1, 0, 0);
             this.drawScaledSphere(0.5, 0.5, 0.5);
             // thigh
             gTranslate(0, -0.5, 0);
@@ -256,6 +253,134 @@ class Bear {
         }
         gPop();
     }
+
+    getPoseToController(targetPose) {
+        let thisBear = this;
+        let first = true;
+        let initial = {};
+    
+        return function theController(time) {
+            if (first) {
+                first = false;
+                // Capture the initial pose angles
+                initial = { ...thisBear.poseAngles };
+            }
+    
+            // Interpolate each angle based on time
+            thisBear.poseAngles = Object.keys(initial).reduce((acc, key) => {
+                acc[key] = initial[key] + (targetPose[key] - initial[key]) * time;
+                return acc;
+            }, {});
+        };
+    }
+
+    
+    getOscillatingPoseController(oscillationAmount, poseA, poseB){
+        let strideCount = 0;
+        let currentPoseController = this.getPoseToController(poseA);
+        let alternatingStride = true;
+        let thisB = this;
+    
+        return function theController(time) {
+            // Normalize time within each stride
+            const strideTime = time * oscillationAmount - strideCount;
+    
+            // Call the current pose controller
+            currentPoseController(strideTime);
+    
+            // Switch strides when time progresses to the next stride interval
+            if (strideTime >= 1) {
+                strideCount++;
+                // Alternate between poseStride1 and poseStride2
+                alternatingStride = !alternatingStride;
+                currentPoseController = thisB.getPoseToController(
+                    alternatingStride ? poseA : poseB
+                );
+            }
+    
+            // Stop after the specified amount of strides
+            if (strideCount >= oscillationAmount) {
+                // Optionally, finalize or reset to an idle pose if needed
+                return;
+            }
+        };
+    }
+
+    getMoveToController([x,y,z]){
+        let thisBear = this;
+        let first = true;
+        let initial = [0,0,0];
+    
+        return function theController(time) {
+            if (first) {
+                first = false;
+                // Capture the initial pose angles
+                initial = [thisBear.x, thisBear.y, thisBear.z];
+            }
+    
+            // Interpolate each coord based on time
+            thisBear.x = initial[0] * (1-time) + x * time;
+            thisBear.y = initial[1] * (1-time) + y * time;
+            thisBear.z = initial[2] * (1-time) + z * time;
+        };
+    }
+
+    getRotToController([x,y,z]) {
+        let thisB = this;
+        let first = true;
+        let initial = [0,0,0];
+    
+        return function theController(time) {
+            if (first) {
+                first = false;
+                initial = [...thisB.rot];
+            }
+    
+            // Interpolate each angle based on time
+            thisB.rot[0] = x * time + initial[0] * (1-time);
+            thisB.rot[1] = y * time + initial[1] * (1-time);
+            thisB.rot[2] = z * time + initial[2] * (1-time);
+        };
+    }
+
+    getMoveCircularController(centerOfRotToRight) {
+        let thisBear = this;
+        let first = true;
+        let center = { x: 0, z: 0 };
+        let startAngle = 0;
+        let initialPosition = { x: 0, z: 0 };
+        let initialHeading = 0;
+    
+        return function theController(time) {
+            if (first) {
+                first = false;
+                // Capture the initial position and heading
+                initialPosition = { x: thisBear.x, z: thisBear.z };
+                initialHeading = thisBear.rot[1];
+    
+                // Calculate the center of rotation based on initial heading
+                const angleRad = -initialHeading * (Math.PI / 180);
+                center = {
+                    x: initialPosition.x - centerOfRotToRight * Math.cos(angleRad),
+                    z: initialPosition.z - centerOfRotToRight * Math.sin(angleRad)
+                };
+    
+                // Calculate the start angle (relative to the center)
+                startAngle = Math.atan2(initialPosition.z - center.z, initialPosition.x - center.x);
+            }
+    
+            // Calculate the current angle along the arc based on time
+            const currentAngle = startAngle + (time * Math.PI * 2); // assuming full rotation over time 1
+    
+            // Calculate the new position along the arc
+            thisBear.x = center.x + centerOfRotToRight * Math.cos(currentAngle);
+            thisBear.z = center.z + centerOfRotToRight * Math.sin(currentAngle);
+    
+            // Update the heading to stay tangent to the circle
+            thisBear.rot[1] = -(currentAngle * 180) / Math.PI; // convert to degrees and adjust to tangent
+        };
+    }
+
 
 }
 
