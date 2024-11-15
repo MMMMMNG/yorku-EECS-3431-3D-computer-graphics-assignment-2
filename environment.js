@@ -50,6 +50,50 @@ function drawBase() {
 
         gTranslate(-15,0,0);
         drawScaledCube(8, 8, 6);
+
+        // draw satelite
+        gPush(); {
+            setColor(vec4(1.0, 1.0, 1.0, 1.0));
+            gTranslate(0, 10, 12);
+            drawScaledCube(1, 20, 1);
+
+            gTranslate(0, 25, 0);
+            gRotate(90, 1, 0, 0);
+            gScale(30,30,20);
+            drawCone();
+
+            setColor(vec4(0.0, 0.102, 0.6, 1.0))
+            gRotate(-180, 1, 0, 0);
+            gScale(10,10,15);
+            drawCone();
+
+        }
+        gPop();
+
+        // rest of base
+        setColor(vec4(1.0, 0.945, 0.851, 1.0)) ;
+        gTranslate(15, 0, -15);
+        drawScaledCube(6, 8, 8);
+
+        gPush(); {
+            gTranslate(0, 0, 30);
+            drawScaledCube(6, 8, 8);
+    
+            gTranslate(0,0, 23);
+            drawScaledSphere(18,18,18);
+        }
+        gPop();
+
+        gPush(); {
+            gTranslate(15,0, 15);
+           
+            drawScaledCube(8, 8, 8);
+    
+            gTranslate(23, 0, 0);
+            drawScaledSphere(18,18,18);
+        }
+        gPop();
+        
     }
     gPop();    
 }
