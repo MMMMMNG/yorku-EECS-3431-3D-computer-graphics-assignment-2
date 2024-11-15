@@ -67,10 +67,19 @@ class Timeline {
         timeline.do_once_at(6,() => astronaut.hasPickAxe = true);
         timeline.from_to_do(6,10, astronaut.getMiningController(16));
         timeline.from_to_do(10,11, astronaut.getRotToController([0,0,0]));
-        timeline.from_to_do(10,15, astronaut.getMoveCircularController(20, 0.5));
-        timeline.from_to_do(15,20, astronaut.getMoveCircularController(-20, 0.5));
+
+        
+        timeline.from_to_do(10, 40, astronaut.getWalkAnimController(90));
+        timeline.from_to_do(10,12, astronaut.getMoveCircularController(20, 0.5));
+        timeline.from_to_do(12,13, astronaut.getWalkingToController([-40, 0.25,-25]));
+        timeline.from_to_do(13,17, astronaut.getMoveCircularController(24));
+        timeline.from_to_do(17,19, astronaut.getMoveCircularController(24, 0.5));
+        timeline.from_to_do(19,20, astronaut.getWalkingToController([8, 0.25, 45]));
+        timeline.from_to_do(20,23, astronaut.getMoveCircularController(-32));
+        timeline.from_to_do(23,24, astronaut.getMoveCircularController(-32,0.75));
+        timeline.from_to_do(24,25, astronaut.getWalkingToController([20, 0.25, 13]));
+        timeline.from_to_do(25,26, astronaut.getMoveCircularController(-16,0.5));
         timeline.do_once_at(10,() => astronaut.hasPickAxe = false);
-        timeline.from_to_do(10, 20, astronaut.getWalkAnimController(20));
 
         timeline.from_to_do(0,20, bear.getOscillatingPoseController(50, bear.poseStride1, bear.poseStride2));
         timeline.from_to_do(0,20, bear.getMoveCircularController(40, 0.75));
