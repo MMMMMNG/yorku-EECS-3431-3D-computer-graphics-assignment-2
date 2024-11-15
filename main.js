@@ -278,8 +278,6 @@ window.onload = function init() {
     // set a default material
     setColor(materialDiffuse) ;
     
-  
-    
     // set the callbacks for the UI elements
     document.getElementById("sliderXi").oninput = function() {
         RX = this.value ;
