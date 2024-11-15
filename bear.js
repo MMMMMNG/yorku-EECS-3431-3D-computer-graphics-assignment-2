@@ -1,12 +1,15 @@
 class Bear {
     constructor(){
         this.x = -2;
-        this.y = 4;
-        this.z = 0;
+        this.y = 3;
+        this.z = -100;
         this.currentLocation = vec3(this.x,this.y,this.z);
-        this.poseAngles = {fl:10,fr:30,bl:70,br:90,lip:120};
+        this.poseAngles = {fl:0,fr:0,bl:0,br:0,lip:0};
         this.poseStride1 = {fl:-45,fr:45,bl:45,br:-45,lip:0};
         this.poseStride2 = {fl:45,fr:-45,bl:-45,br:45,lip:0};
+        this.poseChase1 = {fl:45,fr:45,bl:-45,br:-45,lip:0};
+        this.poseChase2 = {fl:-45,fr:-45,bl:45,br:45,lip:0};
+        this.poseChill = {fl:0,fr:0,bl:0,br:0,lip:0};
         this.rot = [0,0,0];
 
     }
@@ -322,7 +325,7 @@ class Bear {
         };
     }
 
-    getMoveToController([x,y,z]){
+    getWalkingToController([x,y,z]){
         let thisBear = this;
         let first = true;
         let initial = [0,0,0];
