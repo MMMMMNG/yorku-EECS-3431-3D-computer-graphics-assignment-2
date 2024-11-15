@@ -416,22 +416,15 @@ class Astronaut {
     
                 // Calculate the initial heading vector
                 const headingRad = initialHeading * (Math.PI / 180);
-                const headingVector = {
-                    x: Math.cos(headingRad),
-                    z: Math.sin(headingRad)
-                };
+                const headingVector = vec3(Math.cos(headingRad), 0, Math.sin(headingRad));
     
                 // Calculate the perpendicular vector to the heading (to the right or left)
-                const perpDirection = centerOfRotToRight >= 0 ? 1 : -1;
-                const perpVector = {
-                    x: -perpDirection * headingVector.z,
-                    z: perpDirection * headingVector.x
-                };
+                const perpVector = normalize(cross(headingVector,vec3(0,1,0)));
     
                 // Determine the center of rotation based on initial position and perpendicular vector
                 center = {
-                    x: initialPosition.x + perpVector.x * radius,
-                    z: initialPosition.z + perpVector.z * radius
+                    x: initialPosition.x + perpVector[0] * radius,
+                    z: initialPosition.z + perpVector[2] * radius
                 };
             }
     
@@ -440,10 +433,13 @@ class Astronaut {
     
             // Determine the current angle along the arc based on time
             const currentAngle = startAngle + Math.sign(centerOfRotToRight) * (time * howMuchToComplete * Math.PI * 2);
+
+            //new pos
+            let newPos = mult(rotate(time * 360 * howMuchToComplete, vec3(0,1,0)), vec4(initialPosition.x - center.x, 0, initialPosition.z - center.z, 0));
     
             // Calculate the new position along the arc
-            thisBear.x = center.x + radius * Math.cos(currentAngle);
-            thisBear.z = center.z + radius * Math.sin(currentAngle);
+            thisBear.x = newPos[0];
+            thisBear.z = newPos[2];
     
             // Update the heading to stay tangent to the circle
             thisBear.rot[1] = (-currentAngle * 180 / Math.PI) + (centerOfRotToRight < 0 ? 180 : 0);
