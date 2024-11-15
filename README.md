@@ -15,6 +15,7 @@ every 2 seconds. We implemented classes for the bear and astronaut objects, as w
 This would be something we aim to fix in the future of this project.
 
 ---------- Learning Resources ----------------
+
 Screen space reflections and refraction:
 https://lettier.github.io/3d-game-shaders-for-beginners/screen-space-reflection.html
 
@@ -27,6 +28,7 @@ Transparency and Alpha Blending:
 https://learnwebgl.brown37.net/11_advanced_rendering/alpha_blending.html 
 
 -------------- Texture Citations ------------------
+
 "Deserted terrestial planet in orange colors" (planet_skybox.webp) by Ruletkka. 2015, May 3, https://depositphotos.com/photos/mars.html?qview=71865897.
 
 "Galaxy wallpaper in warm colors" (galaxy_wallpaper.jpg) by Freepik, https://www.freepik.com/free-ai-image/galaxy-wallpaper-warm-colors_280118555.htm#fromView=search&page=3&position=39&uuid=d0c3b73e-551b-48ff-9b6b-134a2f154eec.
