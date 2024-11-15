@@ -1,11 +1,11 @@
-function getBulletCamController(centerOfRot, radius) {
+function getBulletCamController(centerOfRot, radius, yOffset = 0) {
     return function theController(time) {
         // Calculate angle in radians (complete circle over time 0 to 1)
         const angle = 2 * Math.PI * time;
 
         // Update the camera position (eye) to circle around centerOfRot
         eye[0] = centerOfRot[0] + radius * Math.cos(angle);
-        eye[1] = centerOfRot[1]; // Maintain same y-level as centerOfRot
+        eye[1] = centerOfRot[1] + yOffset; // Maintain same y-level as centerOfRot
         eye[2] = centerOfRot[2] + radius * Math.sin(angle);
 
         // Set 'at' to always look at the center of rotation

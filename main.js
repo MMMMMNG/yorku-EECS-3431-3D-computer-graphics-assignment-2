@@ -6,7 +6,7 @@ var gl;
 var program ;
 
 var near = 1;
-var far = 100;
+var far = 1000;
 let fov = 60;
 
 
