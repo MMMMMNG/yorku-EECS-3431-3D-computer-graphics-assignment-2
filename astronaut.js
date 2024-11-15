@@ -3,7 +3,7 @@ class Astronaut {
         this.x = -16;
         this.y = 6;
         this.z = -25;
-        this.rot = [0,0,0];
+        this.rot = [0, 0, 0];
         this.currentLocation = vec3(this.x, this.y, this.z);
         this.leftShoulderAngle = 0;
         this.rightShoulderAngle = 0;
@@ -18,10 +18,10 @@ class Astronaut {
         this.foreArmLength = 1;
         this.thighLength = 1.4;
         this.calveLength = 1;
-        this.poseStride1 = {llt:-60,rlt:60,lkt:60,rkt:90,lst:-45,rst:90,le:-70,ret:-70};
-        this.poseStride2 = {llt:60,rlt:-60,lkt:90,rkt:60,lst:90,rst:-45,le:-70,ret:-70};
-        this.poseCrouch = {lst: 0, rst: 0, ret: -30, le: -20, llt: -100, rlt: 0, lkt: 70, rkt: 90};
-        this.poseRightArmUp = {lst: -200, rst: 0, ret: -30, le: -20, llt: -100, rlt: 0, lkt: 70, rkt: 90};
+        this.poseStride1 = { llt: -60, rlt: 60, lkt: 60, rkt: 90, lst: -45, rst: 90, le: -70, ret: -70 };
+        this.poseStride2 = { llt: 60, rlt: -60, lkt: 90, rkt: 60, lst: 90, rst: -45, le: -70, ret: -70 };
+        this.poseCrouch = { lst: 0, rst: 0, ret: -30, le: -20, llt: -100, rlt: 0, lkt: 70, rkt: 90 };
+        this.poseRightArmUp = { lst: -200, rst: 0, ret: -30, le: -20, llt: -100, rlt: 0, lkt: 70, rkt: 90 };
         this.hasPickAxe = false;
         this.transparentMatrixLoc = vec3(this.x, this.y, this.z);
 
@@ -39,7 +39,7 @@ class Astronaut {
             gRotate(this.rot[2], 0, 0, 1);
             // Torso
             this.currentLocation = modelMatrix; // save this matrix for animation continuation from previous location
-            
+
             this.drawScaledSphere(1.5, 2, 1.2);
 
             // draw air tank
@@ -75,7 +75,7 @@ class Astronaut {
                 this.drawScaledCube(0.05, 0.15, 0.28);
 
                 gTranslate(-0.1, 0, 0);
-                gRotate(45,0,0,1);
+                gRotate(45, 0, 0, 1);
                 this.drawScaledCube(0.05, 0.15, 0.3);
 
             }
@@ -84,7 +84,7 @@ class Astronaut {
             // Head and Helmet
             gPush();
             {
-                
+
                 gTranslate(0, 2.6, 0);
 
                 // apply transparent texture to helmet?
@@ -97,7 +97,7 @@ class Astronaut {
 
                 // Turn off updating of the z-buffer
                 gl.depthMask(false);
-                
+
                 drawScaledSphere(1.2, 1.2, 1.2);
 
                 gl.disable(gl.BLEND);
@@ -166,7 +166,7 @@ class Astronaut {
                         // hand
                         gTranslate(0, -foreHalf, 0);
                         this.drawScaledSphere(0.3, 0.3, 0.3);
-                        if(this.hasPickAxe && arm === "left"){
+                        if (this.hasPickAxe && arm === "left") {
                             this.drawPickaxe();
                         }
                     }
@@ -180,28 +180,28 @@ class Astronaut {
 
     }
 
-    drawPickaxe(){
+    drawPickaxe() {
         gPush();
         {
-            
-            setColor(vec4(160/255,82/255,45/255,1));
+
+            setColor(vec4(160 / 255, 82 / 255, 45 / 255, 1));
             gPush();
             {
-                gTranslate(0,0,1.5);
-                gScale(0.25,0.25,3);
+                gTranslate(0, 0, 1.5);
+                gScale(0.25, 0.25, 3);
                 drawCylinder();
 
             }
             gPop();
-            
-            setColor(vec4(0.45,0.45,0.45,1));
-            gTranslate(0,0,3);
-            gScale(0.2,1.2,0.2);
+
+            setColor(vec4(0.45, 0.45, 0.45, 1));
+            gTranslate(0, 0, 3);
+            gScale(0.2, 1.2, 0.2);
             drawCube();
 
         }
         gPop();
-        setColor(vec4(1,1,1,1));
+        setColor(vec4(1, 1, 1, 1));
 
     }
 
@@ -229,7 +229,7 @@ class Astronaut {
             // thigh
             gTranslate(0, -halfThigh, 0);
             this.drawScaledSphere(0.5, halfThigh, 0.5);
-            gTranslate(0,-halfThigh,0);
+            gTranslate(0, -halfThigh, 0);
 
             gPush(); {
                 //knee
@@ -296,13 +296,13 @@ class Astronaut {
         let thisAst = this;
         let first = true;
         let initial = [0, 0, 0];
-    
+
         return function theController(time) {
             if (first) {
                 first = false;
                 initial = [thisAst.x, thisAst.y, thisAst.z];
             }
-    
+
             // Interpolate between initial and target positions based on time
             thisAst.x = initial[0] + (target[0] - initial[0]) * time;
             thisAst.y = initial[1] + (target[1] - initial[1]) * time;
@@ -314,7 +314,7 @@ class Astronaut {
         let thisAst = this;
         let first = true;
         let initial = { lla: 0, rla: 0, lk: 0, rk: 0, ls: 0, rs: 0, le: 0, re: 0 };
-    
+
         return function theController(time) {
             if (first) {
                 first = false;
@@ -330,7 +330,7 @@ class Astronaut {
                     re: thisAst.rightElbowAngle
                 };
             }
-    
+
             // Interpolate each angle based on time
             thisAst.leftLegAngle = initial.lla + (llt - initial.lla) * time;
             thisAst.rightLegAngle = initial.rla + (rlt - initial.rla) * time;
@@ -342,21 +342,21 @@ class Astronaut {
             thisAst.rightElbowAngle = initial.re + (ret - initial.re) * time;
         };
     }
-    getRotToController([x,y,z]) {
+    getRotToController([x, y, z]) {
         let thisAst = this;
         let first = true;
-        let initial = [0,0,0];
-    
+        let initial = [0, 0, 0];
+
         return function theController(time) {
             if (first) {
                 first = false;
                 initial = [...thisAst.rot];
             }
-    
+
             // Interpolate each angle based on time
-            thisAst.rot[0] = x * time + initial[0] * (1-time);
-            thisAst.rot[1] = y * time + initial[1] * (1-time);
-            thisAst.rot[2] = z * time + initial[2] * (1-time);
+            thisAst.rot[0] = x * time + initial[0] * (1 - time);
+            thisAst.rot[1] = y * time + initial[1] * (1 - time);
+            thisAst.rot[2] = z * time + initial[2] * (1 - time);
         };
     }
 
@@ -364,23 +364,23 @@ class Astronaut {
         return this.getOscillatingPoseController(amountOfStrides, this.poseStride1, this.poseStride2);
     }
 
-    getMiningController(hits){
+    getMiningController(hits) {
         return this.getOscillatingPoseController(hits, this.poseCrouch, this.poseRightArmUp);
     }
 
-    getOscillatingPoseController(oscillationAmount, poseA, poseB){
+    getOscillatingPoseController(oscillationAmount, poseA, poseB) {
         let strideCount = 0;
         let currentPoseController = this.getPoseToController(poseA);
         let alternatingStride = true;
         let thisA = this;
-    
+
         return function theController(time) {
             // Normalize time within each stride
             const strideTime = time * oscillationAmount - strideCount;
-    
+
             // Call the current pose controller
             currentPoseController(strideTime);
-    
+
             // Switch strides when time progresses to the next stride interval
             if (strideTime >= 1) {
                 strideCount++;
@@ -390,7 +390,7 @@ class Astronaut {
                     alternatingStride ? poseA : poseB
                 );
             }
-    
+
             // Stop after the specified amount of strides
             if (strideCount >= oscillationAmount) {
                 // Optionally, finalize or reset to an idle pose if needed
@@ -407,35 +407,35 @@ class Astronaut {
         let initialPosition = { x: 0, z: 0 };
         let initialHeading = 0;
         const radius = Math.abs(centerOfRotToRight);
-    
+
         return function theController(time) {
             if (first) {
                 first = false;
                 // Capture the initial position and heading
                 initialPosition = { x: thisBear.x, z: thisBear.z };
                 initialHeading = thisBear.rot[1];
-    
+
                 // Calculate the center of rotation based on initial heading
                 const angleRad = -initialHeading * (Math.PI / 180);
                 center = {
                     x: initialPosition.x - centerOfRotToRight * Math.cos(angleRad),
                     z: initialPosition.z - centerOfRotToRight * Math.sin(angleRad)
                 };
-    
+
                 // Calculate the start angle (relative to the center)
                 startAngle = Math.atan2(initialPosition.z - center.z, initialPosition.x - center.x);
             }
-    
+
             // Calculate the current angle along the arc based on time
             const currentAngle = startAngle + (time * howMuchToComplete * Math.PI * 2); // assuming full rotation over time 1
-    
+
             // Calculate the new position along the arc
             thisBear.x = center.x + radius * Math.cos(currentAngle);
-            thisBear.z = center.z + Math.sign(centerOfRotToRight)  * radius * Math.sin(currentAngle);
-    
+            thisBear.z = center.z + Math.sign(centerOfRotToRight) * radius * Math.sin(currentAngle);
+
             // Update the heading to stay tangent to the circle
             thisBear.rot[1] = (-currentAngle * 180) / Math.PI; // convert to degrees and adjust to tangent
-            if(centerOfRotToRight < 0){
+            if (centerOfRotToRight < 0) {
                 thisBear.rot[1] = (-thisBear.rot[1] + 180);
             }
             thisBear.rot[1] = ((thisBear.rot[1] + 180) % 360 + 360) % 360 - 180;
