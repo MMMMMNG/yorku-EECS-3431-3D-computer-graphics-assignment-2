@@ -3,9 +3,9 @@ Fall 2024 York University, Toronto
 
 Jessica Corkal & Marius Gebhardt
 
-Email: jcorkal@my.yorku.ca Student ID: 219314095
+Email: jcorkal@my.yorku.ca
 
-Email: mmmm@my.yorku.ca Student ID: 221828934
+Email: mmmm@my.yorku.ca 
 
 Our animation follows the short story of an astronaut in a galaxy far, far away. As they're mining for space rocks, they encounter an unexpected visitor - a space bear!
 
